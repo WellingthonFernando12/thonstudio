@@ -1,0 +1,10 @@
+{
+  "name": "wellingthon-link-in-bio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "python3 -m http.server 4173",
+    "deploy:cloudflare": "wrangler pages deploy . --project-name wellingthon-link-in-bio",
+    "deploy:vercel": "vercel --prod --yes"
+  }
+}
