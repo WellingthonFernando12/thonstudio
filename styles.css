@@ -115,7 +115,7 @@ button {
   border-radius: 50%;
   background: #202020;
   object-fit: cover;
-  object-position: 62% 22%;
+  object-position: center;
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
 }
 
@@ -171,19 +171,7 @@ h1 {
 
 .bio-list p {
   margin: 0;
-  position: relative;
-  padding-left: 28px;
   font-weight: 620;
-}
-
-.bio-list p::before {
-  position: absolute;
-  left: 0;
-  top: 0.46em;
-  width: 10px;
-  height: 10px;
-  border: 2px solid #4e4e4e;
-  content: "";
 }
 
 .metrics {
