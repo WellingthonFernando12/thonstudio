@@ -4,14 +4,9 @@ Landing page premium estilo Link in Bio para converter visitantes do Instagram e
 
 ## Manutencao
 
-Edite `index.html` para trocar textos, foto e links.
+Edite `index.html` para trocar textos e links.
 Edite `styles.css` para alterar cores, espacamentos e animacoes.
-
-Para adicionar a foto depois, substitua o bloco `.avatar` no `index.html` por uma imagem:
-
-```html
-<img class="avatar-image" src="./foto.jpg" alt="Wellingthon Fernando" />
-```
+Troque `foto.jpg` para atualizar a foto de perfil.
 
 ## Deploy sugerido
 
