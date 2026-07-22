@@ -1,0 +1,17 @@
+# Render Blueprint: configura o deploy automaticamente
+services:
+  - type: web
+    name: thon-toolkit
+    runtime: python
+    plan: free # mude para 'starter' para nao dormir e ter mais recursos
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend:app --workers 1 --threads 8 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: YOUTUBE_API_KEY
+        sync: false # voce preenche isso no painel do Render
+      - key: THON_AUTH_PASSWORD
+        sync: false # senha de acesso ao painel (ex: thon123)
+      - key: THON_RUNTIME_LOG
+        value: thon_backend_runtime.log

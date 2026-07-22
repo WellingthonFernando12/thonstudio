@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>THON TOOLKIT — Prospector V58.22-PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060d0c;
+  --s0:#040908;
+  --s1:#0c1816;
+  --s2:#11201d;
+  --s3:#16271f;
+  --bd:rgba(255,255,255,0.07);
+  --bda:rgba(255,255,255,0.14);
+  --ac:#00d4ff;
+  --ac2:#00a8d8;
+  --gr:#2effa0;
+  --gr2:#19c97a;
+  --ye:#ffd166;
+  --or:#ff9b3d;
+  --rd:#ff4f6d;
+  --pu:#a78bfa;
+  --mu:#52797a;
+  --mu2:#3c5c5d;
+  --tx:#e8faf4;
+  --tx2:#9fbab5;
+  --ff:'Syne','Inter',sans-serif;
+  --if:'Inter',sans-serif;
+  --mo:'DM Mono',ui-monospace,monospace;
+  --r:14px;
+  --r-sm:10px;
+  --r-lg:20px;
+  --shadow:0 12px 40px rgba(0,0,0,0.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--tx);font-family:var(--ff);-webkit-font-smoothing:antialiased}
+body{
+  background:
+    radial-gradient(ellipse 80% 50% at 0% 0%,rgba(0,212,255,0.05),transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%,rgba(46,255,160,0.04),transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+}
+body::after{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.025) 3px,rgba(0,0,0,0.025) 4px);pointer-events:none;z-index:9999;opacity:.6}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.15);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,255,0.3)}
+
+/* ═══ TOP NAV ═══ */
+.topnav{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;height:60px;
+  background:rgba(6,13,12,0.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--bd);
+}
+.nav-brand{display:flex;align-items:center;gap:12px}
+.nav-mark{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,rgba(0,212,255,0.18),rgba(46,255,160,0.10));
+  border:1px solid rgba(0,212,255,0.32);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mo);font-size:16px;font-weight:700;color:var(--ac);
+  box-shadow:0 0 18px rgba(0,212,255,0.18),inset 0 0 12px rgba(0,212,255,0.05);
+}
+.nav-title{font-size:14px;font-weight:800;letter-spacing:.01em}
+.nav-sub{font-family:var(--mo);font-size:9px;color:var(--mu);letter-spacing:.14em;margin-top:2px}
+.nav-center{display:flex;align-items:center;gap:2px}
+.nav-step{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 13px;border-radius:9px;
+  font-family:var(--mo);font-size:10.5px;color:var(--mu);
+  cursor:pointer;transition:all .18s;
+  border:1px solid transparent;
+  font-weight:500;
+}
+.nav-step:hover{color:var(--tx2);background:rgba(255,255,255,0.035)}
+.nav-step.active{color:var(--ac);background:rgba(0,212,255,0.09);border-color:rgba(0,212,255,0.22)}
+.nav-step.done{color:var(--gr)}
+.nav-step-num{
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(255,255,255,0.06);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9.5px;font-weight:700;
+  transition:all .18s;
+}
+.nav-step.active .nav-step-num{background:rgba(0,212,255,0.22);color:var(--ac);box-shadow:0 0 10px rgba(0,212,255,0.4)}
+.nav-step.done .nav-step-num{background:rgba(46,255,160,0.16);color:var(--gr)}
+.nav-conn{width:18px;height:1px;background:linear-gradient(90deg,var(--bd),var(--bda),var(--bd))}
+.nav-right{display:flex;align-items:center;gap:8px}
+.pulse-badge{
+  display:flex;align-items:center;gap:6px;
+  padding:5px 11px;border-radius:8px;
+  background:rgba(46,255,160,0.08);
+  border:1px solid rgba(46,255,160,0.22);
+  font-family:var(--mo);font-size:10px;color:var(--gr);
+  font-weight:500;letter-spacing:.05em;
+}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--gr);box-shadow:0 0 0 0 rgba(46,255,160,0.5);animation:pulse-ring 2s infinite}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(46,255,160,0.5)}70%{box-shadow:0 0 0 8px rgba(46,255,160,0)}100%{box-shadow:0 0 0 0 rgba(46,255,160,0)}}
+.btool{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 11px;border-radius:8px;
+  background:var(--s2);border:1px solid var(--bd);
+  color:var(--tx2);font-family:var(--mo);font-size:10.5px;
+  cursor:pointer;transition:all .15s;font-weight:500;
+}
+.btool:hover{border-color:var(--bda);color:var(--tx);background:var(--s3)}
+.btool.bl{color:var(--ac2);border-color:rgba(0,168,216,0.18)}
+.btool.bl:hover{color:var(--ac);border-color:rgba(0,212,255,0.3)}
+
+/* ═══ WRAP & PANELS ═══ */
+.wrap{max-width:1200px;margin:0 auto;padding:28px 24px 80px}
+.step-panel{display:none}
+.step-panel.active{display:block;animation:fadeSlide .35s cubic-bezier(.2,.7,.3,1) both}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.step-hd{margin-bottom:24px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.step-hd-l{flex:1;min-width:280px}
+.step-tag{font-family:var(--mo);font-size:10px;color:var(--mu);letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;font-weight:500}
+.step-hd h2{font-size:clamp(24px,3.2vw,34px);font-weight:800;letter-spacing:-.025em;line-height:1.1}
+.step-hd h2 span{background:linear-gradient(135deg,var(--ac),var(--gr));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.step-hd p{color:var(--mu);font-size:13px;margin-top:8px;font-family:var(--if);font-weight:400;max-width:580px}
+.step-hd-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.qchip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 11px;border-radius:8px;
+  background:var(--s2);border:1px solid var(--bd);
+  font-family:var(--mo);font-size:10px;color:var(--tx2);
+}
+.qchip b{color:var(--ac)}
+.qchip.gr b{color:var(--gr)}
+
+/* ═══ CARD ═══ */
+.card{
+  background:linear-gradient(180deg,var(--s1),var(--s0));
+  border:1px solid var(--bd);
+  border-radius:var(--r-lg);
+  padding:24px;
+  margin-bottom:14px;
+  position:relative;
+}
+.ct{
+  font-family:var(--mo);font-size:10px;color:var(--mu);
+  text-transform:uppercase;letter-spacing:.16em;
+  margin-bottom:18px;display:flex;align-items:center;gap:10px;
+  font-weight:500;
+}
+.ct::before{content:'';width:3px;height:11px;background:linear-gradient(180deg,var(--ac),var(--gr));border-radius:2px}
+.ct::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+
+/* ═══ STEP 1 — ENGINE ═══ */
+.engine-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.engine-card{
+  padding:24px 20px;border-radius:var(--r);
+  background:linear-gradient(180deg,var(--s2),var(--s1));
+  border:1px solid var(--bd);
+  cursor:pointer;transition:all .22s;position:relative;overflow:hidden;
+}
+.engine-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;background:radial-gradient(ellipse 90% 70% at 50% 0%,rgba(0,212,255,0.10),transparent 70%)}
+.engine-card:hover{border-color:var(--bda);transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,0,0,0.3)}
+.engine-card.on{border-color:var(--ac);background:linear-gradient(180deg,rgba(0,212,255,0.07),var(--s1))}
+.engine-card.on::before{opacity:1}
+.engine-card.on::after{content:'✓';position:absolute;top:14px;right:16px;color:var(--ac);font-size:15px;font-weight:800;text-shadow:0 0 8px rgba(0,212,255,0.5)}
+.ec-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;font-family:var(--mo);font-size:9.5px;margin-bottom:12px;font-weight:600;letter-spacing:.06em}
+.ec-tag.api{background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.25);color:var(--ac)}
+.ec-tag.dlp{background:rgba(46,255,160,0.10);border:1px solid rgba(46,255,160,0.22);color:var(--gr)}
+.ec-icon{font-size:30px;margin-bottom:14px;line-height:1}
+.ec-name{font-size:16px;font-weight:800;margin-bottom:5px;letter-spacing:-.01em}
+.ec-desc{font-family:var(--if);font-size:12px;color:var(--tx2);line-height:1.55;margin-bottom:16px;font-weight:400}
+.ec-bar{display:flex;gap:8px;align-items:center;margin-top:6px}
+.ec-bar-label{font-family:var(--mo);font-size:9px;color:var(--mu);width:60px;letter-spacing:.06em}
+.ec-bar-track{flex:1;height:4px;background:rgba(255,255,255,0.05);border-radius:99px;overflow:hidden}
+.ec-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ac),var(--gr));transition:width .4s}
+.ec-bar-fill.half{width:50%}
+.ec-bar-fill.full{width:100%}
+.ec-bar-fill.low{width:25%}
+
+/* ═══ STEP 2 — HUNT ═══ */
+.hunt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.hunt-card{
+  padding:26px 20px;border-radius:var(--r);
+  background:linear-gradient(180deg,var(--s2),var(--s1));
+  border:1px solid var(--bd);
+  cursor:pointer;transition:all .22s;text-align:center;
+}
+.hunt-card:hover{border-color:var(--bda);transform:translateY(-3px)}
+.hunt-card.on{border-color:var(--ac);background:linear-gradient(180deg,rgba(0,212,255,0.06),var(--s1))}
+.hunt-card.on::after{content:'✓';display:block;color:var(--ac);font-size:14px;font-weight:800;margin-top:10px;text-shadow:0 0 6px rgba(0,212,255,0.5)}
+.hc-icon{font-size:34px;margin-bottom:14px;line-height:1}
+.hc-name{font-size:16px;font-weight:800;margin-bottom:6px;letter-spacing:-.01em}
+.hc-desc{font-family:var(--if);font-size:12px;color:var(--tx2);line-height:1.55;font-weight:400}
+
+/* ═══ STEP 3 — TERRITÓRIOS + NICHOS ═══ */
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--bd),transparent);margin:22px 0}
+.territory-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px}
+.terr-card{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 13px;border-radius:var(--r-sm);
+  background:var(--s2);border:1px solid var(--bd);
+  cursor:pointer;transition:all .15s;
+}
+.terr-card:hover{border-color:var(--bda);background:var(--s3)}
+.terr-card.on{border-color:var(--ac);background:rgba(0,212,255,0.07)}
+.terr-card.on .terr-flag{filter:saturate(1.3) brightness(1.1)}
+.terr-flag{font-size:20px;line-height:1;flex-shrink:0;transition:filter .2s}
+.terr-info{flex:1;min-width:0}
+.terr-name{font-size:12.5px;font-weight:700;line-height:1.2}
+.terr-code{font-family:var(--mo);font-size:9px;color:var(--mu);margin-top:2px;letter-spacing:.08em}
+.terr-card.on .terr-code{color:var(--ac)}
+
+.nichos-wrap{display:flex;flex-wrap:wrap;gap:7px}
+.nb{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:9px;
+  border:1px solid var(--bd);background:var(--s2);
+  color:var(--mu);font-family:var(--if);font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .15s;user-select:none;
+}
+.nb:hover{border-color:var(--bda);color:var(--tx2)}
+.nb.on{border-color:var(--ac);background:rgba(0,212,255,0.10);color:var(--tx);box-shadow:0 0 14px rgba(0,212,255,0.10)}
+.nb .dot{width:6px;height:6px;border-radius:50%;background:var(--bd);transition:all .15s;flex-shrink:0}
+.nb.on .dot{background:var(--ac);box-shadow:0 0 8px var(--ac)}
+.nb .rm{margin-left:4px;opacity:.45;cursor:pointer;font-size:14px;line-height:1}
+.nb .rm:hover{opacity:1;color:var(--rd)}
+.crow{display:flex;gap:8px;margin-top:14px}
+.crow input{
+  flex:1;background:var(--s2);border:1px solid var(--bd);
+  border-radius:9px;padding:10px 14px;color:var(--tx);
+  font-family:var(--if);font-size:13px;outline:none;transition:all .15s;
+}
+.crow input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(0,212,255,0.10)}
+.crow input::placeholder{color:var(--mu)}
+.bsm{
+  padding:10px 16px;border-radius:9px;background:var(--s2);
+  border:1px solid var(--bd);color:var(--tx2);
+  font-family:var(--if);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;
+}
+.bsm:hover{border-color:var(--ac);color:var(--ac);background:rgba(0,212,255,0.05)}
+
+/* ═══ STEP 4 — PARÂMETROS ═══ */
+.perf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:24px}
+.perf-btn{
+  padding:18px 14px;border-radius:var(--r);
+  border:1px solid var(--bd);background:var(--s2);
+  cursor:pointer;text-align:center;transition:all .18s;position:relative;
+}
+.perf-btn:hover{border-color:var(--bda);background:var(--s3)}
+.perf-btn.on{border-color:var(--gr);background:rgba(46,255,160,0.06)}
+.perf-btn.on::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gr),var(--ac));border-radius:var(--r) var(--r) 0 0}
+.perf-btn strong{display:block;font-size:15px;margin-bottom:6px;font-weight:800;letter-spacing:-.01em}
+.perf-btn span{display:block;font:9.5px/1.5 var(--mo);color:var(--mu);letter-spacing:.02em}
+.params-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.fg label{display:block;font-family:var(--mo);font-size:9.5px;color:var(--mu);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px;font-weight:500}
+.fg input,.fg select{
+  width:100%;background:var(--s2);border:1px solid var(--bd);
+  border-radius:9px;padding:10px 13px;color:var(--tx);
+  font-family:var(--mo);font-size:13px;font-weight:500;outline:none;
+  transition:all .15s;-moz-appearance:textfield;appearance:none;
+}
+.fg input:focus,.fg select:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(0,212,255,0.10)}
+.fg input::-webkit-outer-spin-button,.fg input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.fg select option{background:var(--s1)}
+.subs-row{display:flex;align-items:center;gap:8px}
+.subs-row input{flex:1}
+.subs-row span{font-family:var(--mo);font-size:11px;color:var(--mu)}
+
+/* ═══ STEP 5 — AUTO ═══ */
+.auto-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.auto-toggle-card{
+  padding:22px;border-radius:var(--r);
+  background:linear-gradient(180deg,var(--s2),var(--s1));
+  border:1px solid var(--bd);
+}
+.auto-toggle-card h3{font-size:15px;font-weight:800;margin-bottom:6px;letter-spacing:-.01em}
+.auto-toggle-card p{font-family:var(--if);font-size:12px;color:var(--tx2);margin-bottom:16px;line-height:1.55;font-weight:400}
+.toggle-row{display:flex;align-items:center;gap:12px}
+.toggle-switch{position:relative;width:46px;height:26px;cursor:pointer;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-track{
+  position:absolute;inset:0;border-radius:99px;
+  background:rgba(255,255,255,0.07);border:1px solid var(--bd);
+  transition:all .22s;
+}
+.toggle-switch input:checked ~ .toggle-track{background:rgba(46,255,160,0.18);border-color:var(--gr);box-shadow:0 0 12px rgba(46,255,160,0.25)}
+.toggle-knob{
+  position:absolute;top:3px;left:3px;width:18px;height:18px;
+  border-radius:50%;background:var(--mu);transition:all .22s;
+}
+.toggle-switch input:checked ~ .toggle-track .toggle-knob{left:23px;background:var(--gr);box-shadow:0 0 10px rgba(46,255,160,0.6)}
+.status-text{font-family:var(--mo);font-size:12px;color:var(--mu);font-weight:500;letter-spacing:.06em}
+.status-text.on{color:var(--gr)}
+.btns-ctrl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.btn-ctrl{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:12px 14px;border-radius:10px;
+  background:var(--s2);border:1px solid var(--bd);
+  color:var(--tx2);font-family:var(--mo);font-size:11px;font-weight:500;
+  cursor:pointer;transition:all .15s;
+}
+.btn-ctrl:hover{border-color:var(--bda);color:var(--tx);background:var(--s3)}
+.btn-ctrl.warn:hover{border-color:var(--ye);color:var(--ye);background:rgba(255,209,102,0.05)}
+.btn-ctrl.succ:hover{border-color:var(--gr);color:var(--gr);background:rgba(46,255,160,0.05)}
+.btn-ctrl.dang:hover{border-color:var(--rd);color:var(--rd);background:rgba(255,79,109,0.05)}
+.btn-ctrl.info:hover{border-color:var(--ac);color:var(--ac);background:rgba(0,212,255,0.05)}
+.btn-ctrl:disabled{opacity:.4;cursor:not-allowed}
+
+.cta-wrap{margin-top:20px}
+.btn-run{
+  width:100%;padding:20px;border-radius:var(--r);
+  background:linear-gradient(135deg,#00d4ff,#2effa0);
+  border:none;color:#03100f;font-family:var(--ff);font-size:17px;font-weight:800;
+  cursor:pointer;transition:all .25s;letter-spacing:.005em;
+  position:relative;overflow:hidden;
+}
+.btn-run::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);transform:translateX(-100%);transition:transform .6s}
+.btn-run:hover{transform:translateY(-2px);box-shadow:0 14px 44px rgba(0,212,255,0.32)}
+.btn-run:hover::before{transform:translateX(100%)}
+.btn-run:active{transform:translateY(0)}
+.btn-run:disabled{opacity:.45;cursor:not-allowed;transform:none;background:linear-gradient(135deg,#1a3936,#152825);color:var(--mu)}
+.alrt{
+  display:none;margin-top:12px;padding:12px 16px;border-radius:10px;
+  font-family:var(--mo);font-size:12px;
+  background:rgba(255,209,102,0.08);border:1px solid rgba(255,209,102,0.22);color:var(--ye);
+}
+.alrt.err{background:rgba(255,79,109,0.08);border-color:rgba(255,79,109,0.22);color:var(--rd)}
+.alrt.ok{background:rgba(46,255,160,0.08);border-color:rgba(46,255,160,0.22);color:var(--gr)}
+
+/* ═══ NAV BUTTONS ═══ */
+.step-nav{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+.btn-back{
+  padding:12px 22px;border-radius:10px;
+  background:transparent;border:1px solid var(--bd);color:var(--tx2);
+  font-family:var(--if);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;
+}
+.btn-back:hover{border-color:var(--bda);color:var(--tx);background:var(--s2)}
+.btn-next{
+  padding:12px 28px;border-radius:10px;
+  background:rgba(0,212,255,0.10);border:1px solid rgba(0,212,255,0.30);color:var(--ac);
+  font-family:var(--if);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;
+}
+.btn-next:hover{background:rgba(0,212,255,0.18);border-color:var(--ac);box-shadow:0 0 16px rgba(0,212,255,0.15)}
+
+/* ═══ STEP 6 — LIVE ═══ */
+.op-layout{display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:start}
+@media(max-width:900px){.op-layout{grid-template-columns:1fr}}
+.console-wrap{
+  background:var(--s0);
+  border:1px solid rgba(46,255,160,0.16);
+  border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:0 0 30px rgba(46,255,160,0.04) inset;
+}
+.console-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 16px;
+  background:rgba(46,255,160,0.04);
+  border-bottom:1px solid rgba(46,255,160,0.10);
+}
+.console-title{display:flex;align-items:center;gap:9px;font-family:var(--mo);font-size:11px;font-weight:500;color:var(--gr);letter-spacing:.05em}
+.console-dot{width:8px;height:8px;border-radius:50%;background:var(--gr);box-shadow:0 0 10px rgba(46,255,160,0.6);animation:pulse-ring 1.5s infinite}
+.console-dot.idle{background:var(--mu);box-shadow:none;animation:none}
+.console-dot.err{background:var(--rd);box-shadow:0 0 10px rgba(255,79,109,0.6);animation:none}
+.console-log{
+  height:440px;overflow:auto;padding:14px 16px;
+  font:11.5px/1.6 var(--mo);color:#7dffc0;
+  white-space:pre-wrap;word-break:break-word;
+}
+.log-query{color:#4dc8ff}
+.log-hit{color:#2effa0}
+.log-skip{color:#52797a}
+.log-qual{color:#ffd166}
+.log-err{color:#ff4f6d}
+.log-sys{color:#2a5c58}
+.log-stage{color:#a78bfa;font-weight:500}
+.log-warn{color:#ff9b3d}
+
+.metrics-panel{display:flex;flex-direction:column;gap:10px}
+.metrics-grid-live{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mlive{
+  background:linear-gradient(180deg,var(--s1),var(--s0));
+  border:1px solid var(--bd);
+  border-radius:12px;padding:13px 15px;
+  position:relative;overflow:hidden;transition:all .2s;
+}
+.mlive:hover{border-color:var(--bda)}
+.mlive::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:99px;opacity:0;transition:opacity .3s}
+.mlive.ml-q::before,.mlive.ml-c::before{background:var(--ac);opacity:1}
+.mlive.ml-v::before{background:var(--ye);opacity:.85}
+.mlive.ml-ql::before,.mlive.ml-ap::before{background:var(--gr);opacity:1}
+.mlive.ml-rp::before{background:var(--rd);opacity:1}
+.mlive-val{font-family:var(--mo);font-size:28px;font-weight:500;line-height:1;margin-bottom:5px;color:var(--tx);letter-spacing:-.01em}
+.mlive.ml-ap .mlive-val{color:var(--gr)}
+.mlive.ml-rp .mlive-val{color:var(--rd)}
+.mlive-label{font-family:var(--mo);font-size:9px;color:var(--mu);text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+.mlive-bar{height:3px;background:rgba(255,255,255,0.05);border-radius:99px;overflow:hidden;margin-top:9px}
+.mlive-bar-fill{height:100%;border-radius:99px;transition:width .6s ease}
+.ml-q .mlive-bar-fill,.ml-c .mlive-bar-fill{background:var(--ac)}
+.ml-v .mlive-bar-fill{background:var(--ye)}
+.ml-ql .mlive-bar-fill{background:var(--gr)}
+
+.timeline-bar{
+  background:linear-gradient(180deg,var(--s1),var(--s0));
+  border:1px solid var(--bd);border-radius:14px;padding:16px 18px;
+}
+.tl-label{font-family:var(--mo);font-size:9px;color:var(--mu);text-transform:uppercase;letter-spacing:.14em;margin-bottom:14px;font-weight:500}
+.tl-steps{display:flex;align-items:center;gap:0}
+.tl-step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative}
+.tl-step::after{content:'';position:absolute;top:9px;left:50%;right:-50%;height:1px;background:var(--bd);z-index:0}
+.tl-step:last-child::after{display:none}
+.tl-dot{
+  width:20px;height:20px;border-radius:50%;
+  border:1px solid var(--bd);background:var(--s2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;position:relative;z-index:1;transition:all .3s;
+}
+.tl-step.done .tl-dot{background:rgba(46,255,160,0.18);border-color:var(--gr);box-shadow:0 0 10px rgba(46,255,160,0.35);color:var(--gr)}
+.tl-step.active .tl-dot{background:rgba(0,212,255,0.16);border-color:var(--ac);box-shadow:0 0 12px rgba(0,212,255,0.35);animation:pulse-ring 1.5s infinite}
+.tl-name{font-family:var(--mo);font-size:8.5px;color:var(--mu);margin-top:6px;text-align:center;letter-spacing:.04em}
+.tl-step.done .tl-name{color:var(--gr)}
+.tl-step.active .tl-name{color:var(--ac)}
+
+.sbar-live{
+  background:linear-gradient(180deg,var(--s1),var(--s0));
+  border:1px solid var(--bd);border-radius:var(--r-lg);
+  padding:18px 22px;margin-bottom:16px;
+}
+.sbar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:14px;flex-wrap:wrap}
+.smsg{font-family:var(--mo);font-size:12.5px;color:var(--tx);font-weight:500;flex:1;min-width:200px}
+.scounts{display:flex;gap:14px;flex-wrap:wrap}
+.sc{font-family:var(--mo);font-size:11px;color:var(--mu);font-weight:500}
+.sc b{color:var(--tx);font-weight:600}
+.pbar{height:5px;background:rgba(255,255,255,0.05);border-radius:99px;overflow:hidden}
+.pbfill{height:100%;background:linear-gradient(90deg,var(--ac),var(--gr));border-radius:99px;width:0%;transition:width .6s ease;box-shadow:0 0 8px rgba(0,212,255,0.4)}
+.btn-stop{
+  width:100%;padding:12px;border-radius:10px;
+  background:transparent;border:1px solid rgba(255,79,109,0.28);color:var(--rd);
+  font-family:var(--if);font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;
+  margin-top:10px;
+}
+.btn-stop:hover{background:rgba(255,79,109,0.08);border-color:var(--rd);box-shadow:0 0 14px rgba(255,79,109,0.15)}
+
+/* ═══ STEP 7 — LOTE ═══ */
+.lote-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:14px;flex-wrap:wrap}
+.lote-title{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.lote-sub{font-family:var(--mo);font-size:11px;color:var(--mu);margin-top:4px;font-weight:500}
+.lote-badge{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:9px;
+  background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.22);
+  font-family:var(--mo);font-size:11px;color:var(--ac);font-weight:500;
+}
+.lote-progress{height:4px;background:var(--bd);border-radius:99px;overflow:hidden;margin-bottom:20px}
+.lote-progress-fill{height:100%;background:linear-gradient(90deg,var(--ac),var(--gr));border-radius:99px;transition:width .3s;box-shadow:0 0 10px rgba(0,212,255,0.3)}
+.lote-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:16px}
+.cc{
+  background:linear-gradient(180deg,var(--s1),var(--s0));
+  border:1px solid var(--bd);
+  border-radius:18px;padding:18px;
+  transition:all .2s;cursor:pointer;position:relative;overflow:hidden;
+}
+.cc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:99px 0 0 99px;background:var(--bd);transition:all .3s}
+.cc.score-high::before{background:var(--gr);box-shadow:0 0 12px rgba(46,255,160,0.45)}
+.cc.score-mid::before{background:var(--ye);box-shadow:0 0 12px rgba(255,209,102,0.35)}
+.cc.score-low::before{background:var(--rd)}
+.cc:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.16);box-shadow:0 12px 32px rgba(0,0,0,0.3)}
+.cc.sel{border-color:var(--gr);background:linear-gradient(180deg,rgba(46,255,160,0.05),var(--s0))}
+.cc.sel::after{content:'✓';position:absolute;top:14px;right:16px;color:var(--gr);font-size:18px;font-weight:800;text-shadow:0 0 8px rgba(46,255,160,0.5)}
+.cc-header{display:flex;gap:14px;margin-bottom:14px}
+.cc-thumb{
+  width:120px;height:68px;border-radius:11px;flex-shrink:0;overflow:hidden;
+  background:linear-gradient(135deg,rgba(0,212,255,0.14),rgba(46,255,160,0.08));
+  border:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:center;
+}
+.cc-thumb img{width:100%;height:100%;object-fit:cover}
+.cc-ph{font-size:24px}
+.cc-info{flex:1;min-width:0}
+.cc-name{font-size:15px;font-weight:800;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.01em}
+.cc-link{font-family:var(--mo);font-size:10px;color:var(--ac);text-decoration:none;display:block;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.85}
+.cc-link:hover{opacity:1}
+.cc-vt{font-family:var(--mo);font-size:10px;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cc-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:11px}
+.cc-metric{background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.04);border-radius:8px;padding:8px;text-align:center}
+.cc-metric-label{font-family:var(--mo);font-size:8.5px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;font-weight:500}
+.cc-metric-val{font-family:var(--mo);font-size:13px;font-weight:500;color:var(--tx)}
+.score-bar{height:4px;background:rgba(255,255,255,0.05);border-radius:99px;overflow:hidden;margin-bottom:11px}
+.score-fill{height:100%;border-radius:99px;transition:width .4s}
+.cc-tags{display:flex;flex-wrap:wrap;gap:5px}
+.cc-score-reasons{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(255,255,255,0.04);width:100%}
+.tag{font-family:var(--mo);font-size:10px;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,0.035);border:1px solid var(--bd);color:var(--mu);font-weight:500}
+.tag-gr{background:rgba(46,255,160,0.08);border-color:rgba(46,255,160,0.22);color:var(--gr)}
+.tag-ye{background:rgba(255,209,102,0.08);border-color:rgba(255,209,102,0.22);color:var(--ye)}
+.tag-bl{background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.22);color:var(--ac)}
+.tag-rd{background:rgba(255,79,109,0.08);border-color:rgba(255,79,109,0.22);color:var(--rd)}
+.tag-mu{background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.06);color:var(--mu);font-size:9px;padding:2px 6px}
+
+.lote-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.btn-approve,.btn-discard,.btn-skip,.btn-verify{
+  padding:12px 20px;border-radius:10px;font-family:var(--if);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;border:1px solid;
+}
+.btn-approve{background:rgba(46,255,160,0.10);border-color:rgba(46,255,160,0.32);color:var(--gr)}
+.btn-approve:hover{background:rgba(46,255,160,0.18);box-shadow:0 0 14px rgba(46,255,160,0.18)}
+.btn-discard{background:rgba(255,79,109,0.08);border-color:rgba(255,79,109,0.30);color:var(--rd)}
+.btn-discard:hover{background:rgba(255,79,109,0.15);box-shadow:0 0 14px rgba(255,79,109,0.18)}
+.btn-skip{background:var(--s2);border-color:var(--bd);color:var(--tx2)}
+.btn-skip:hover{border-color:var(--bda);color:var(--tx)}
+.btn-verify{background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.28);color:var(--ac)}
+.btn-verify:hover{background:rgba(0,212,255,0.15)}
+
+/* ═══ DRAWER ═══ */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
+.drawer-overlay.on{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;width:980px;max-width:96vw;
+  background:linear-gradient(180deg,var(--s1),var(--bg));
+  border-left:1px solid var(--bd);
+  z-index:301;transform:translateX(100%);
+  transition:transform .3s cubic-bezier(.2,.7,.3,1);
+  display:flex;flex-direction:column;
+  box-shadow:-20px 0 60px rgba(0,0,0,0.5);
+}
+.drawer.on{transform:translateX(0)}
+.drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 22px;border-bottom:1px solid var(--bd);flex-shrink:0;
+}
+.drawer-title{font-size:16px;font-weight:800;letter-spacing:-.01em}
+.drawer-close{
+  width:32px;height:32px;border-radius:9px;
+  background:var(--s2);border:1px solid var(--bd);
+  color:var(--tx2);cursor:pointer;font-size:14px;transition:all .15s;
+}
+.drawer-close:hover{background:var(--rd);color:#fff;border-color:var(--rd)}
+.drawer-body{flex:1;overflow:auto;padding:18px 22px}
+
+.coleta-panel{background:var(--s0);border:1px solid rgba(46,255,160,0.15);border-radius:14px;padding:16px;margin-bottom:18px}
+.coleta-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:14px;flex-wrap:wrap}
+.coleta-title{font-size:14px;font-weight:800;letter-spacing:-.01em}
+.coleta-version{font-family:var(--mo);font-size:10px;color:var(--mu);margin-top:3px;letter-spacing:.06em}
+.btn-att{padding:8px 14px;border-radius:9px;background:var(--s2);border:1px solid var(--bd);color:var(--tx2);font-family:var(--mo);font-size:11px;cursor:pointer;transition:all .15s}
+.btn-att:hover{border-color:var(--ac);color:var(--ac)}
+.coleta-bar-outer{height:5px;background:rgba(255,255,255,0.05);border-radius:99px;overflow:hidden;margin-bottom:14px}
+.coleta-bar-fill{height:100%;background:linear-gradient(90deg,var(--ac),var(--gr));border-radius:99px;width:0%;transition:width .6s}
+.cmetricas{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}
+@media(max-width:780px){.cmetricas{grid-template-columns:repeat(3,1fr)}}
+.cmet{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:11px 8px;text-align:center}
+.cmet-val{font-family:var(--mo);font-size:18px;font-weight:600;color:var(--tx);margin-bottom:3px}
+.cmet.gr .cmet-val{color:var(--gr)}
+.cmet.ye .cmet-val{color:var(--ye)}
+.cmet.rd .cmet-val{color:var(--rd)}
+.cmet-label{font-family:var(--mo);font-size:8.5px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;font-weight:500}
+
+.filter-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.fchip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:99px;
+  background:var(--s2);border:1px solid var(--bd);
+  font-family:var(--mo);font-size:10.5px;color:var(--mu);
+  cursor:pointer;transition:all .15s;font-weight:500;
+}
+.fchip:hover{color:var(--tx2);border-color:var(--bda)}
+.fchip.on{background:rgba(0,212,255,0.10);border-color:rgba(0,212,255,0.30);color:var(--ac)}
+.fc{background:rgba(255,255,255,0.06);padding:1px 7px;border-radius:99px;font-size:9.5px;font-weight:600}
+
+.tbl-wrap{overflow:auto;border:1px solid var(--bd);border-radius:12px;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-family:var(--if)}
+thead{background:var(--s2)}
+th{padding:11px 12px;text-align:left;font-family:var(--mo);font-size:9.5px;color:var(--mu);text-transform:uppercase;letter-spacing:.10em;font-weight:600;border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:11px 12px;font-size:12px;color:var(--tx2);border-bottom:1px solid rgba(255,255,255,0.03);vertical-align:middle}
+tbody tr:hover{background:rgba(255,255,255,0.02)}
+.cname{font-weight:700;color:var(--tx);font-size:13px}
+.clink{font-family:var(--mo);font-size:10px;color:var(--ac);text-decoration:none;display:block;opacity:.85;margin-top:2px}
+.clink:hover{opacity:1;text-decoration:underline}
+.cmeta{font-family:var(--mo);font-size:9.5px;color:var(--mu);margin-top:2px}
+.badge{display:inline-block;padding:3px 8px;border-radius:5px;font-family:var(--mo);font-size:9.5px;font-weight:600;letter-spacing:.04em;white-space:nowrap}
+.b-ok{background:rgba(46,255,160,0.10);border:1px solid rgba(46,255,160,0.22);color:var(--gr)}
+.b-warn{background:rgba(255,209,102,0.10);border:1px solid rgba(255,209,102,0.22);color:var(--ye)}
+.b-bad{background:rgba(255,79,109,0.10);border:1px solid rgba(255,79,109,0.22);color:var(--rd)}
+.b-mu{background:rgba(255,255,255,0.04);border:1px solid var(--bd);color:var(--mu)}
+.b-info{background:rgba(0,212,255,0.10);border:1px solid rgba(0,212,255,0.22);color:var(--ac)}
+.score-ring{width:34px;height:34px;vertical-align:middle}
+.msg-prev{font-family:var(--if);font-size:11px;color:var(--tx2);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400}
+.act-cell{white-space:nowrap}
+.bact{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:5px 9px;border-radius:7px;margin:2px;
+  background:var(--s2);border:1px solid var(--bd);
+  color:var(--tx2);font-family:var(--mo);font-size:9.5px;
+  cursor:pointer;transition:all .12s;font-weight:500;
+}
+.bact:hover{border-color:var(--bda);color:var(--tx);background:var(--s3)}
+.bact.bl{color:var(--ac2)}
+.bact.bl:hover{color:var(--ac);border-color:rgba(0,212,255,0.30)}
+.bact.gr{color:var(--gr2)}
+.bact.gr:hover{color:var(--gr);border-color:rgba(46,255,160,0.30)}
+.bact.rd{color:var(--rd)}
+.bact.rd:hover{border-color:rgba(255,79,109,0.30)}
+
+.pagination{display:flex;gap:5px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.pag-btn{
+  min-width:32px;height:32px;padding:0 8px;border-radius:8px;
+  background:var(--s2);border:1px solid var(--bd);
+  color:var(--tx2);font-family:var(--mo);font-size:11px;font-weight:500;
+  cursor:pointer;transition:all .12s;
+}
+.pag-btn:hover{border-color:var(--bda);color:var(--tx)}
+.pag-btn.active{background:rgba(0,212,255,0.12);border-color:rgba(0,212,255,0.30);color:var(--ac)}
+
+.vtag{font-family:var(--mo);font-size:10px;color:var(--mu);text-align:center;margin-top:14px;letter-spacing:.04em;font-weight:500}
+
+.toolbar{
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+  padding:14px 22px;border-top:1px solid var(--bd);
+  background:var(--s0);flex-shrink:0;
+}
+.tsep{width:1px;height:24px;background:var(--bd);margin:0 4px}
+.ctrl-in{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 10px;border-radius:9px;
+  background:var(--s2);border:1px solid var(--bd);
+}
+.ctrl-lbl{font-family:var(--mo);font-size:10px;color:var(--mu);letter-spacing:.04em}
+.ctrl-num{width:42px;padding:3px 6px;background:var(--s0);border:1px solid var(--bd);border-radius:6px;color:var(--tx);font-family:var(--mo);font-size:11px;outline:none}
+.ctrl-chk{cursor:pointer}
+
+.rep-row td{font-size:11.5px}
+
+/* ═══ UTILS ═══ */
+.spin{display:inline-block;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.dot-i{display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:5px;vertical-align:middle}
+.empty-state{text-align:center;padding:50px 20px;font-family:var(--mo);color:var(--mu)}
+.empty-state .ic{font-size:38px;margin-bottom:12px}
+.empty-state .ti{font-size:14px;color:var(--tx2);margin-bottom:5px;font-weight:600}
+.empty-state .sb{font-size:11px}
+@media(max-width:780px){
+  .params-grid{grid-template-columns:1fr 1fr}
+  .engine-grid,.hunt-grid,.perf-grid{grid-template-columns:1fr}
+  .auto-grid{grid-template-columns:1fr}
+  .nav-center{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TOP NAV
+═══════════════════════════════════════════════════════════ -->
+<nav class="topnav">
+  <div class="nav-brand">
+    <div class="nav-mark">W</div>
+    <div>
+      <div class="nav-title">THON TOOLKIT</div>
+      <div class="nav-sub">// PROSPECTOR V58.22-PRO</div>
+    </div>
+  </div>
+
+  <div class="nav-center" id="nav-steps">
+    <div class="nav-step active" data-step="1" onclick="goStep(1)"><div class="nav-step-num">1</div> Engine</div>
+    <div class="nav-conn"></div>
+    <div class="nav-step" data-step="2" onclick="goStep(2)"><div class="nav-step-num">2</div> Hunt</div>
+    <div class="nav-conn"></div>
+    <div class="nav-step" data-step="3" onclick="goStep(3)"><div class="nav-step-num">3</div> Territórios</div>
+    <div class="nav-conn"></div>
+    <div class="nav-step" data-step="4" onclick="goStep(4)"><div class="nav-step-num">4</div> Parâmetros</div>
+    <div class="nav-conn"></div>
+    <div class="nav-step" data-step="5" onclick="goStep(5)"><div class="nav-step-num">5</div> Auto</div>
+    <div class="nav-conn"></div>
+    <div class="nav-step" data-step="6" onclick="goStep(6)"><div class="nav-step-num">6</div> Live</div>
+    <div class="nav-conn"></div>
+    <div class="nav-step" data-step="7" onclick="goStep(7)"><div class="nav-step-num">7</div> Lote</div>
+  </div>
+
+  <div class="nav-right">
+    <div class="pulse-badge" id="hunt-badge" style="display:none"><div class="pulse"></div> AUTO HUNT</div>
+    <button class="btool bl" onclick="openDrawer('aprov')">✅ Aprovados <span id="nav-ac" style="background:rgba(46,255,160,0.15);padding:2px 7px;border-radius:5px;font-size:9.5px">0</span></button>
+    <button class="btool" onclick="openDrawer('reprov')" style="color:var(--rd);border-color:rgba(255,79,109,0.22)">✗ Descartados <span id="nav-rc" style="background:rgba(255,79,109,0.12);padding:2px 7px;border-radius:5px;font-size:9.5px;color:var(--rd)">0</span></button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN
+═══════════════════════════════════════════════════════════ -->
+<div class="wrap">
+
+<!-- ─── STEP 1 — ENGINE ─────────────────────────────────── -->
+<div class="step-panel active" id="step-1">
+  <div class="step-hd">
+    <div class="step-hd-l">
+      <div class="step-tag">// passo 01 de 07</div>
+      <h2>Escolha o <span>engine</span></h2>
+      <p>Define como o prospector vai descobrir e verificar canais. Cada engine tem trade-offs entre velocidade, profundidade e consumo de quota.</p>
+    </div>
+    <div class="step-hd-r">
+      <div class="qchip">chaves ativas: <b id="hd-keys">—</b></div>
+      <div class="qchip">quota hoje: <b id="hd-quota">—</b></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">00 — Modo de coleta</div>
+    <div class="engine-grid">
+      <div class="engine-card on" data-v="api" onclick="setEngine(this)">
+        <div class="ec-tag api">API</div>
+        <div class="ec-icon">🔍</div>
+        <div class="ec-name">API Discovery</div>
+        <div class="ec-desc">YouTube Data API descobre canais e pontua direto no lote. DLP fica desligado. Mais rápido e econômico.</div>
+        <div class="ec-bar"><span class="ec-bar-label">velocidade</span><div class="ec-bar-track"><div class="ec-bar-fill full"></div></div></div>
+        <div class="ec-bar"><span class="ec-bar-label">profundidade</span><div class="ec-bar-track"><div class="ec-bar-fill half"></div></div></div>
+      </div>
+      <div class="engine-card" data-v="api_multi_source_fast" onclick="setEngine(this)">
+        <div class="ec-tag api">API+</div>
+        <div class="ec-icon">⚡</div>
+        <div class="ec-name">Multi-Source Rápida</div>
+        <div class="ec-desc">Combina vídeo, canal e playlist em paralelo com 8 workers. Maior cobertura com pouco mais de tempo.</div>
+        <div class="ec-bar"><span class="ec-bar-label">velocidade</span><div class="ec-bar-track"><div class="ec-bar-fill" style="width:75%"></div></div></div>
+        <div class="ec-bar"><span class="ec-bar-label">profundidade</span><div class="ec-bar-track"><div class="ec-bar-fill" style="width:70%"></div></div></div>
+      </div>
+      <div class="engine-card" data-v="dlp" onclick="setEngine(this)">
+        <div class="ec-tag dlp">DLP</div>
+        <div class="ec-icon">🛡️</div>
+        <div class="ec-name">DLP Completo</div>
+        <div class="ec-desc">yt-dlp descobre E verifica 100% dos canais com smart-fallback 403-safe. Único modo que suporta Auto Hunt contínuo.</div>
+        <div class="ec-bar"><span class="ec-bar-label">velocidade</span><div class="ec-bar-track"><div class="ec-bar-fill low"></div></div></div>
+        <div class="ec-bar"><span class="ec-bar-label">profundidade</span><div class="ec-bar-track"><div class="ec-bar-fill full"></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="step-nav">
+    <button class="btn-next" onclick="goStep(2)">Próximo: Tipo de Caça →</button>
+  </div>
+</div>
+
+<!-- ─── STEP 2 — HUNT TYPE ──────────────────────────────── -->
+<div class="step-panel" id="step-2">
+  <div class="step-hd">
+    <div class="step-hd-l">
+      <div class="step-tag">// passo 02 de 07</div>
+      <h2>Tipo de <span>caça</span></h2>
+      <p>Define o perfil de conteúdo que o engine vai priorizar na descoberta e no scoring dos canais.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">01 — Formato do conteúdo</div>
+    <div class="hunt-grid">
+      <div class="hunt-card on" data-v="longform" onclick="setHunt(this)">
+        <div class="hc-icon">🎙️</div>
+        <div class="hc-name">Long Form</div>
+        <div class="hc-desc">Canais com vídeos longos (10min+), pouca distribuição de cortes. Maior potencial de monetização e ticket.</div>
+      </div>
+      <div class="hunt-card" data-v="shortform" onclick="setHunt(this)">
+        <div class="hc-icon">✂️</div>
+        <div class="hc-name">Short Form</div>
+        <div class="hc-desc">Creators de shorts, reels e vídeos verticais. Alto volume, menor ticket, ciclo de venda mais rápido.</div>
+      </div>
+      <div class="hunt-card" data-v="ambos" onclick="setHunt(this)">
+        <div class="hc-icon">🚀</div>
+        <div class="hc-name">Full Content</div>
+        <div class="hc-desc">Sem filtro de formato. Longos + cortes + distribuição multicanal. Maior cobertura, menor precisão.</div>
+      </div>
+    </div>
+  </div>
+  <div class="step-nav">
+    <button class="btn-back" onclick="goStep(1)">← Voltar</button>
+    <button class="btn-next" onclick="goStep(3)">Próximo: Territórios e Nichos →</button>
+  </div>
+</div>
+
+<!-- ─── STEP 3 — TERRITÓRIOS + NICHOS + PERFIS ─────────── -->
+<div class="step-panel" id="step-3">
+  <div class="step-hd">
+    <div class="step-hd-l">
+      <div class="step-tag">// passo 03 de 07</div>
+      <h2>Territórios e <span>nichos</span></h2>
+      <p>Selecione onde caçar (regiões) e o que caçar (nichos + perfis). O backend gera queries compostas automaticamente.</p>
+    </div>
+  </div>
+
+  <!-- TERRITÓRIOS -->
+  <div class="card">
+    <div class="ct">02 — Territórios / regiões</div>
+    <div class="territory-grid" id="tg">
+      <div class="terr-card on" data-v="BR" onclick="this.classList.toggle('on')">
+        <div class="terr-flag">🇧🇷</div>
+        <div class="terr-info"><div class="terr-name">Brasil</div><div class="terr-code">BR · regionCode</div></div>
+      </div>
+      <div class="terr-card" data-v="PT" onclick="this.classList.toggle('on')">
+        <div class="terr-flag">🇵🇹</div>
+        <div class="terr-info"><div class="terr-name">Portugal</div><div class="terr-code">PT · pt-PT</div></div>
+      </div>
+      <div class="terr-card" data-v="US" onclick="this.classList.toggle('on')">
+        <div class="terr-flag">🇺🇸</div>
+        <div class="terr-info"><div class="terr-name">EUA</div><div class="terr-code">US · en</div></div>
+      </div>
+      <div class="terr-card" data-v="MX" onclick="this.classList.toggle('on')">
+        <div class="terr-flag">🇲🇽</div>
+        <div class="terr-info"><div class="terr-name">México</div><div class="terr-code">MX · es</div></div>
+      </div>
+      <div class="terr-card" data-v="AR" onclick="this.classList.toggle('on')">
+        <div class="terr-flag">🇦🇷</div>
+        <div class="terr-info"><div class="terr-name">Argentina</div><div class="terr-code">AR · es</div></div>
+      </div>
+      <div class="terr-card" data-v="ES" onclick="this.classList.toggle('on')">
+        <div class="terr-flag">🇪🇸</div>
+        <div class="terr-info"><div class="terr-name">Espanha</div><div class="terr-code">ES · es</div></div>
+      </div>
+      <div class="terr-card" data-v="CO" onclick="this.classList.toggle('on')">
+        <div class="terr-flag">🇨🇴</div>
+        <div class="terr-info"><div class="terr-name">Colômbia</div><div class="terr-code">CO · es</div></div>
+      </div>
+      <div class="terr-card" data-v="CL" onclick="this.classList.toggle('on')">
+        <div class="terr-flag">🇨🇱</div>
+        <div class="terr-info"><div class="terr-name">Chile</div><div class="terr-code">CL · es</div></div>
+      </div>
+      <div class="terr-card" data-v="LATAM" onclick="this.classList.toggle('on')">
+        <div class="terr-flag">🌎</div>
+        <div class="terr-info"><div class="terr-name">LATAM</div><div class="terr-code">todos · es</div></div>
+      </div>
+      <div class="terr-card" data-v="GLOBAL" onclick="this.classList.toggle('on')">
+        <div class="terr-flag">🌍</div>
+        <div class="terr-info"><div class="terr-name">Global</div><div class="terr-code">sem filtro</div></div>
+      </div>
+    </div>
+    <p style="font-family:var(--if);font-size:11.5px;color:var(--mu);margin-top:14px;line-height:1.55">✅ V58.23-TERRITÓRIOS: o backend agora respeita as regiões marcadas. Cada território dispara chamadas com seu próprio <code style="font-family:var(--mo);color:var(--ac)">regionCode</code> + <code style="font-family:var(--mo);color:var(--ac)">relevanceLanguage</code>. <b style="color:var(--gr)">Portugal (PT) usa <code>pt-PT</code></b> e traz vídeos em português europeu (não inglês). LATAM usa <code>es</code>, GLOBAL não filtra idioma.</p>
+  </div>
+
+  <!-- NICHOS -->
+  <div class="card">
+    <div class="ct">03 — Nicho / tema</div>
+    <div class="nichos-wrap" id="ng">
+      <button class="nb on" data-v="empreendedorismo" onclick="this.classList.toggle('on')"><div class="dot"></div>Empreendedorismo</button>
+      <button class="nb" data-v="marketing digital" onclick="this.classList.toggle('on')"><div class="dot"></div>Marketing Digital</button>
+      <button class="nb" data-v="negocios" onclick="this.classList.toggle('on')"><div class="dot"></div>Negócios</button>
+      <button class="nb" data-v="tecnologia" onclick="this.classList.toggle('on')"><div class="dot"></div>Tecnologia</button>
+      <button class="nb" data-v="financas" onclick="this.classList.toggle('on')"><div class="dot"></div>Finanças</button>
+      <button class="nb" data-v="saude" onclick="this.classList.toggle('on')"><div class="dot"></div>Saúde</button>
+      <button class="nb" data-v="esportes" onclick="this.classList.toggle('on')"><div class="dot"></div>Esportes</button>
+      <button class="nb" data-v="relacionamento" onclick="this.classList.toggle('on')"><div class="dot"></div>Relacionamento</button>
+      <button class="nb" data-v="religiao" onclick="this.classList.toggle('on')"><div class="dot"></div>Religião</button>
+      <button class="nb" data-v="humor" onclick="this.classList.toggle('on')"><div class="dot"></div>Humor</button>
+      <button class="nb" data-v="educacao" onclick="this.classList.toggle('on')"><div class="dot"></div>Educação</button>
+      <button class="nb" data-v="politica" onclick="this.classList.toggle('on')"><div class="dot"></div>Política</button>
+      <button class="nb" data-v="gamer" onclick="this.classList.toggle('on')"><div class="dot"></div>Gamer</button>
+      <button class="nb" data-v="moda" onclick="this.classList.toggle('on')"><div class="dot"></div>Moda</button>
+      <button class="nb" data-v="culinaria" onclick="this.classList.toggle('on')"><div class="dot"></div>Culinária</button>
+      <button class="nb" data-v="musica" onclick="this.classList.toggle('on')"><div class="dot"></div>Música</button>
+    </div>
+    <div class="crow">
+      <input type="text" id="ci" placeholder="Nicho personalizado (ex: cripto, carros, maquiagem)..." onkeydown="if(event.key==='Enter')addNicho()"/>
+      <button class="bsm" onclick="addNicho()">+ Adicionar</button>
+    </div>
+  </div>
+
+  <!-- PERFIS -->
+  <div class="card">
+    <div class="ct">04 — Perfil / profissão</div>
+    <div class="nichos-wrap" id="pg">
+      <button class="nb on" data-v="podcast" onclick="this.classList.toggle('on')"><div class="dot"></div>Podcast</button>
+      <button class="nb" data-v="medico" onclick="this.classList.toggle('on')"><div class="dot"></div>Médico</button>
+      <button class="nb" data-v="advogado" onclick="this.classList.toggle('on')"><div class="dot"></div>Advogado</button>
+      <button class="nb" data-v="engenheiro" onclick="this.classList.toggle('on')"><div class="dot"></div>Engenheiro</button>
+      <button class="nb" data-v="corretor" onclick="this.classList.toggle('on')"><div class="dot"></div>Corretor</button>
+      <button class="nb" data-v="personal" onclick="this.classList.toggle('on')"><div class="dot"></div>Personal</button>
+      <button class="nb" data-v="consultor" onclick="this.classList.toggle('on')"><div class="dot"></div>Consultor</button>
+      <button class="nb" data-v="agencia" onclick="this.classList.toggle('on')"><div class="dot"></div>Agência</button>
+      <button class="nb" data-v="psicologo" onclick="this.classList.toggle('on')"><div class="dot"></div>Psicólogo</button>
+      <button class="nb" data-v="nutricionista" onclick="this.classList.toggle('on')"><div class="dot"></div>Nutricionista</button>
+      <button class="nb" data-v="dentista" onclick="this.classList.toggle('on')"><div class="dot"></div>Dentista</button>
+      <button class="nb" data-v="arquiteto" onclick="this.classList.toggle('on')"><div class="dot"></div>Arquiteto</button>
+      <button class="nb" data-v="contador" onclick="this.classList.toggle('on')"><div class="dot"></div>Contador</button>
+      <button class="nb" data-v="professor" onclick="this.classList.toggle('on')"><div class="dot"></div>Professor</button>
+      <button class="nb" data-v="gamer" onclick="this.classList.toggle('on')"><div class="dot"></div>Gamer</button>
+    </div>
+    <div class="crow">
+      <input type="text" id="query-personalizada" placeholder="Busca manual extra (ex: minecraft podcast, roblox entrevista)..." style="width:100%"/>
+    </div>
+  </div>
+
+  <div class="step-nav">
+    <button class="btn-back" onclick="goStep(2)">← Voltar</button>
+    <button class="btn-next" onclick="goStep(4)">Próximo: Parâmetros →</button>
+  </div>
+</div>
+
+<!-- ─── STEP 4 — PARÂMETROS ─────────────────────────────── -->
+<div class="step-panel" id="step-4">
+  <div class="step-hd">
+    <div class="step-hd-l">
+      <div class="step-tag">// passo 04 de 07</div>
+      <h2>Mira <span>fina</span></h2>
+      <p>Configure a potência e os filtros da busca. Presets aplicam valores otimizados para cada nível de performance.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">05 — Preset de desempenho</div>
+    <div class="perf-grid">
+      <div class="perf-btn" data-v="baixo" onclick="setPerf(this)"><strong>Baixo</strong><span>2 workers · 400 candidatos · 100 queries</span></div>
+      <div class="perf-btn on" data-v="normal" onclick="setPerf(this)"><strong>Normal</strong><span>4 workers · 700 candidatos · 180 queries</span></div>
+      <div class="perf-btn" data-v="alto" onclick="setPerf(this)"><strong>Alto</strong><span>8 workers · 1.200 candidatos · 280 queries</span></div>
+      <div class="perf-btn" data-v="extremo" onclick="setPerf(this)"><strong>Extremo</strong><span>12 workers · 4.000 candidatos · 420 queries</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">06 — Parâmetros detalhados</div>
+    <div class="params-grid">
+      <div class="fg"><label>Score mínimo (0-100)</label><input type="number" id="score-min" value="55" min="0" max="100"/></div>
+      <div class="fg"><label>Workers simultâneos</label><input type="number" id="workers" value="4" min="1" max="16"/></div>
+      <div class="fg"><label>Query workers (API)</label><input type="number" id="query-workers" value="6" min="1" max="12"/></div>
+      <div class="fg"><label>Meta de candidatos</label><input type="number" id="candidate-target" value="700" min="20" max="50000"/></div>
+      <div class="fg"><label>Queries máximas</label><input type="number" id="query-limit" value="180" min="10" max="600"/></div>
+      <div class="fg"><label>Páginas por query (API)</label><input type="number" id="pages-per-query" value="2" min="1" max="10"/></div>
+      <div class="fg"><label>Vídeos por canal (API)</label><input type="number" id="videos-per-channel" value="5" min="1" max="15"/></div>
+      <div class="fg"><label>Exibição por vez (lote)</label>
+        <select id="batch-size">
+          <option value="3">3 por vez</option>
+          <option value="5" selected>5 por vez</option>
+          <option value="10">10 por vez</option>
+          <option value="20">20 por vez</option>
+        </select>
+      </div>
+      <div class="fg"><label>Inscritos min / max</label>
+        <div class="subs-row">
+          <input type="number" id="min-subs" value="10000" min="0"/>
+          <span>até</span>
+          <input type="number" id="max-subs" value="200000" min="0"/>
+        </div>
+      </div>
+      <div class="fg"><label>Vídeos longos mínimos</label><input type="number" id="min-longos" value="1" min="0" max="5"/></div>
+      <div class="fg"><label>Último vídeo em X dias</label><input type="number" id="max-last-days" value="365" min="30" max="5000"/></div>
+      <div class="fg"><label>YTDLP verify max</label><input type="number" id="ytdlp-verify-max" value="160" min="1" max="1000"/></div>
+    </div>
+  </div>
+  <div class="step-nav">
+    <button class="btn-back" onclick="goStep(3)">← Voltar</button>
+    <button class="btn-next" onclick="goStep(5)">Próximo: Automático →</button>
+  </div>
+</div>
+
+<!-- ─── STEP 5 — AUTOMÁTICO ─────────────────────────────── -->
+<div class="step-panel" id="step-5">
+  <div class="step-hd">
+    <div class="step-hd-l">
+      <div class="step-tag">// passo 05 de 07</div>
+      <h2>Modo <span>automático</span></h2>
+      <p>Configure o Auto Hunt e os controles de backend. Auto Hunt só funciona com engine DLP.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">07 — Auto Hunt</div>
+    <div class="auto-grid">
+      <div class="auto-toggle-card">
+        <h3>Repetir o garimpo ao terminar</h3>
+        <p>O Auto Hunt relança um novo ciclo automaticamente quando o anterior termina. Watchdog integrado previne processos duplicados.</p>
+        <div class="toggle-row">
+          <label class="toggle-switch">
+            <input type="checkbox" id="auto-hunt-toggle" onchange="toggleAutoHunt(this)">
+            <div class="toggle-track"><div class="toggle-knob"></div></div>
+          </label>
+          <span class="status-text" id="auto-hunt-status">DESLIGADO</span>
+        </div>
+        <p style="margin-top:14px;margin-bottom:0;font-size:11px;color:var(--ye)">⚠️ Auto Hunt exige engine <b>DLP</b>. Com API, ele será ignorado.</p>
+      </div>
+      <div>
+        <div class="btns-ctrl-grid">
+          <button class="btn-ctrl warn" onclick="pauseBackend()">⏸ Pausar backend</button>
+          <button class="btn-ctrl succ" onclick="resumeBackend()">▶ Retomar</button>
+          <button class="btn-ctrl dang" onclick="stopBackend()">⏹ Parar tudo</button>
+          <button class="btn-ctrl info" onclick="openTerminal()">🖥️ Terminal/log</button>
+          <button class="btn-ctrl info" onclick="goStep(6)">📟 Console no app</button>
+          <button class="btn-ctrl dang" onclick="resetBanco()" style="color:var(--rd);border-color:rgba(255,79,109,0.22)">🗑️ Reset banco</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- V58.26 #4: BLACKLIST DE CONCORRENTES -->
+  <div class="card">
+    <div class="ct">08 — Blacklist de concorrentes (V58.26)</div>
+    <p style="font-family:var(--if);font-size:12px;color:var(--tx2);line-height:1.55;margin-bottom:14px;font-weight:400">
+      Coloque os IDs (UCxxxxxx) ou URLs dos canais concorrentes seus. Eles serão <b style="color:var(--rd)">reprovados automaticamente</b> no garimpo, sem desperdiçar quota.
+    </p>
+    <div class="crow">
+      <input type="text" id="concorrente-input" placeholder="UCxxxxxxxxxxxxx ou https://youtube.com/channel/UCxxxxx" onkeydown="if(event.key==='Enter')addConcorrente()"/>
+      <button class="bsm" onclick="addConcorrente()">+ Adicionar</button>
+    </div>
+    <div id="concorrentes-list" style="margin-top:14px;display:flex;flex-direction:column;gap:6px;max-height:200px;overflow:auto">
+      <div style="color:var(--mu);font-family:var(--mo);font-size:11px;text-align:center;padding:14px">Carregando...</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="bsm" onclick="carregarConcorrentes()" style="font-size:11px">↻ Recarregar</button>
+      <button class="bsm" onclick="limparConcorrentes()" style="font-size:11px;color:var(--rd);border-color:rgba(255,79,109,0.22)">🗑 Limpar tudo</button>
+    </div>
+  </div>
+
+  <div id="alrt" class="alrt"></div>
+  <div class="cta-wrap">
+    <button class="btn-run" id="btn-run" onclick="iniciarGarimpo()">🎯 Iniciar Garimpo</button>
+  </div>
+  <div class="step-nav" style="justify-content:flex-start;margin-top:12px">
+    <button class="btn-back" onclick="goStep(4)">← Voltar</button>
+  </div>
+</div>
+
+<!-- ─── STEP 6 — OPERATION LIVE ─────────────────────────── -->
+<div class="step-panel" id="step-6">
+  <div class="step-hd">
+    <div class="step-hd-l">
+      <div class="step-tag">// passo 06 de 07 · operação ao vivo</div>
+      <h2>Garimpo <span>rodando</span></h2>
+      <p>Acompanhe o progresso em tempo real. Os leads vão chegando enquanto a busca acontece.</p>
+    </div>
+    <div class="step-hd-r">
+      <div class="qchip">engine: <b id="hd-engine">—</b></div>
+      <div class="qchip gr">status: <b id="hd-status">idle</b></div>
+    </div>
+  </div>
+
+  <div class="sbar-live">
+    <div class="sbar-top">
+      <div class="smsg" id="smsg">Aguardando início do garimpo...</div>
+      <div class="scounts">
+        <div class="sc">Etapa: <b id="sstage">—</b></div>
+        <div class="sc">Queries: <b id="squeries">0</b></div>
+        <div class="sc">Candidatos: <b id="scandidates">0</b></div>
+        <div class="sc">Verificados: <b id="sv">0</b></div>
+        <div class="sc">Qualificados: <b id="sq">0</b></div>
+        <div class="sc">Aprovados: <b id="sa" style="color:var(--gr)">0</b></div>
+        <div class="sc">Descartados: <b id="sr" style="color:var(--rd)">0</b></div>
+      </div>
+    </div>
+    <div class="pbar"><div class="pbfill" id="pb"></div></div>
+  </div>
+
+  <div class="op-layout">
+    <div class="console-wrap">
+      <div class="console-head">
+        <div class="console-title"><div class="console-dot idle" id="console-dot"></div> THON BACKEND CONSOLE</div>
+        <div style="display:flex;gap:6px">
+          <button class="bact bl" onclick="refreshLog()">↻ refresh</button>
+          <button class="bact bl" onclick="openTerminal()">🖥️ terminal</button>
+        </div>
+      </div>
+      <div class="console-log" id="console-log"><span class="log-sys">// thon prospector v58.22-pro · engine aguardando início
+// watchdog ativo · anti-processo duplicado ligado
+// modo 403-safe habilitado</span></div>
+    </div>
+
+    <div class="metrics-panel">
+      <div class="metrics-grid-live">
+        <div class="mlive ml-q"><div class="mlive-val" id="lv-queries">0</div><div class="mlive-label">queries</div><div class="mlive-bar"><div class="mlive-bar-fill" id="lv-queries-bar" style="width:0%"></div></div></div>
+        <div class="mlive ml-c"><div class="mlive-val" id="lv-cand">0</div><div class="mlive-label">candidatos</div><div class="mlive-bar"><div class="mlive-bar-fill" id="lv-cand-bar" style="width:0%"></div></div></div>
+        <div class="mlive ml-v"><div class="mlive-val" id="lv-ver">0</div><div class="mlive-label">verificados</div><div class="mlive-bar"><div class="mlive-bar-fill" id="lv-ver-bar" style="width:0%"></div></div></div>
+        <div class="mlive ml-ql"><div class="mlive-val" id="lv-qual">0</div><div class="mlive-label">qualificados</div><div class="mlive-bar"><div class="mlive-bar-fill" id="lv-qual-bar" style="width:0%"></div></div></div>
+        <div class="mlive ml-ap"><div class="mlive-val" id="lv-ap">0</div><div class="mlive-label">aprovados</div></div>
+        <div class="mlive ml-rp"><div class="mlive-val" id="lv-rp">0</div><div class="mlive-label">descartados</div></div>
+      </div>
+
+      <div class="timeline-bar">
+        <div class="tl-label">pipeline</div>
+        <div class="tl-steps">
+          <div class="tl-step" id="tl-1"><div class="tl-dot">1</div><div class="tl-name">Descoberta</div></div>
+          <div class="tl-step" id="tl-2"><div class="tl-dot">2</div><div class="tl-name">Verificação</div></div>
+          <div class="tl-step" id="tl-3"><div class="tl-dot">3</div><div class="tl-name">Qualificação</div></div>
+          <div class="tl-step" id="tl-4"><div class="tl-dot">4</div><div class="tl-name">Lote</div></div>
+        </div>
+      </div>
+
+      <div class="metrics-panel" style="gap:8px">
+        <div class="qchip" style="justify-content:space-between"><span>quota API usada:</span> <b><span id="lv-quota-used">0</span> / <span id="lv-quota-budget">9000</span></b></div>
+        <div class="qchip" style="justify-content:space-between"><span>brutos no depósito:</span> <b id="lv-brutos">0</b></div>
+        <div class="qchip" style="justify-content:space-between"><span>fila DLP pendente:</span> <b id="lv-dlp-queue">0</b></div>
+        <div class="qchip" style="justify-content:space-between"><span>auto hunt ciclos:</span> <b id="lv-cycles">0</b></div>
+      </div>
+
+      <button class="btn-stop" onclick="pararBusca()">⏹ Parar busca</button>
+    </div>
+  </div>
+
+  <div class="step-nav" style="justify-content:space-between">
+    <button class="btn-back" onclick="goStep(5)">← Voltar</button>
+    <button class="btn-next" onclick="goStep(7)">Ir para o lote →</button>
+  </div>
+</div>
+
+<!-- ─── STEP 7 — LOTE DE CAÇA ──────────────────────────── -->
+<div class="step-panel" id="step-7">
+  <div class="step-hd">
+    <div class="step-hd-l">
+      <div class="step-tag">// passo 07 de 07 · lote de caça</div>
+      <h2>Lote de <span>caça</span></h2>
+      <p>Aprove, descarte ou pule os canais qualificados. O lote é persistente — não se perde ao recarregar.</p>
+    </div>
+    <div class="step-hd-r">
+      <button class="btool bl" onclick="reconstruirFila()">↻ Reconstruir dos brutos</button>
+      <button class="btool" onclick="limparFila()">🗑 Limpar fila</button>
+    </div>
+  </div>
+
+  <div class="lote-header">
+    <div>
+      <div class="lote-title">🎯 Lote atual</div>
+      <div class="lote-sub"><span id="lote-current">0</span> de <span id="lote-total">0</span> leads no lote · engine: <span id="lote-engine">—</span></div>
+    </div>
+    <div class="lote-badge">
+      <div class="pulse"></div>
+      <span id="lote-live-count">0 no lote</span>
+    </div>
+  </div>
+  <div class="lote-progress"><div class="lote-progress-fill" id="lote-prog" style="width:0%"></div></div>
+
+  <div class="lote-grid" id="lote-cards">
+    <div class="empty-state">
+      <div class="ic">🎯</div>
+      <div class="ti">Nenhum lead no lote</div>
+      <div class="sb">Inicie um garimpo ou reconstrua a fila dos brutos.</div>
+    </div>
+  </div>
+
+  <div class="lote-actions">
+    <button class="btn-approve" id="btn-approve" onclick="aprovarAtual()">✓ Aprovar visíveis</button>
+    <button class="btn-discard" id="btn-discard" onclick="descartarAtual()">✗ Descartar visíveis</button>
+    <button class="btn-verify" onclick="verificarBR()">🌎 Verificar BR</button>
+    <button class="btn-skip" onclick="pularAtual()">⏩ Pular</button>
+    <button class="btn-skip" onclick="carregarLoteDoBackend()">↻ Atualizar lote</button>
+  </div>
+
+  <!-- V58.27: Export/Import planilha XLSX -->
+  <div class="card" style="margin-top:18px;background:linear-gradient(180deg,rgba(0,212,255,0.04),var(--s0));border-color:rgba(0,212,255,0.15)">
+    <div class="ct">09 — Análise via planilha (V58.27)</div>
+    <p style="font-family:var(--if);font-size:12px;color:var(--tx2);line-height:1.55;margin-bottom:14px;font-weight:400">
+      Exporte o lote para <b>.xlsx</b>, analise no Excel/Google Sheets preenchendo a coluna <code style="font-family:var(--mo);color:var(--ac)">decisao</code> com <code style="font-family:var(--mo);color:var(--gr)">aprovar</code> / <code style="font-family:var(--mo);color:var(--rd)">reprovar</code> / <code style="font-family:var(--mo);color:var(--ye)">revisar</code>, depois importe de volta. O backend atualiza tudo automático.
+    </p>
+    <div class="lote-actions" style="margin-top:0">
+      <button class="btn-verify" id="btn-export-xlsx" onclick="exportarLoteXlsx()">📤 Exportar lote (.xlsx)</button>
+      <button class="btn-verify" id="btn-import-xlsx" onclick="importarLoteXlsx()" style="background:rgba(46,255,160,0.08);border-color:rgba(46,255,160,0.28);color:var(--gr)">📥 Importar planilha analisada (.xlsx)</button>
+      <input type="file" id="input-import-xlsx" accept=".xlsx" style="display:none" onchange="handleImportXlsx(event)"/>
+    </div>
+    <div id="xlsx-status" style="margin-top:10px;font-family:var(--mo);font-size:11px;color:var(--mu);min-height:14px"></div>
+  </div>
+
+  <div class="step-nav">
+    <button class="btn-back" onclick="goStep(6)">← Voltar</button>
+  </div>
+</div>
+
+</div><!-- /.wrap -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     DRAWERS
+═══════════════════════════════════════════════════════════ -->
+<div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<div class="drawer" id="drawer-aprov">
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-title">✅ Leads aprovados (<span id="ac">0</span>)</div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div class="coleta-panel">
+      <div class="coleta-inner">
+        <div class="coleta-top">
+          <div class="coleta-title-wrap">
+            <div>
+              <div class="coleta-title">Coleta V58.22-PRO</div>
+              <div class="coleta-version">watchdog · anti-processo duplicado · 403-safe · multi-key</div>
+            </div>
+          </div>
+          <button class="btn-att" onclick="animarMetricas()">↻ Atualizar progresso</button>
+        </div>
+        <div class="coleta-bar-outer"><div class="coleta-bar-fill" id="cbar" style="width:0%"></div></div>
+        <div class="cmetricas">
+          <div class="cmet"><div class="cmet-val" id="cm-proc">0/0</div><div class="cmet-label">processados</div></div>
+          <div class="cmet gr"><div class="cmet-val" id="cm-trans">0</div><div class="cmet-label">transcrição</div></div>
+          <div class="cmet ye"><div class="cmet-val" id="cm-strans">0</div><div class="cmet-label">sem trans.</div></div>
+          <div class="cmet"><div class="cmet-val" id="cm-cont">0</div><div class="cmet-label">contato</div></div>
+          <div class="cmet gr"><div class="cmet-val" id="cm-pron">0</div><div class="cmet-label">prontos</div></div>
+          <div class="cmet rd"><div class="cmet-val" id="cm-err">0</div><div class="cmet-label">erros</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="fchip on" onclick="setFiltro('todos',this)">Todos <span class="fc" id="fc-todos">0</span></div>
+      <div class="fchip" onclick="setFiltro('pronto',this)">Prontos <span class="fc" id="fc-pronto">0</span></div>
+      <div class="fchip" onclick="setFiltro('revisar',this)">Revisar <span class="fc" id="fc-revisar">0</span></div>
+      <div class="fchip" onclick="setFiltro('sem_trans',this)">Sem trans. <span class="fc" id="fc-sem_trans">0</span></div>
+      <div class="fchip" onclick="setFiltro('sem_contato',this)">Sem contato <span class="fc" id="fc-sem_contato">0</span></div>
+      <div class="fchip" onclick="setFiltro('erro',this)">Erro <span class="fc" id="fc-erro">0</span></div>
+      <div class="fchip" onclick="setFiltro('alta',this)">Alta prioridade <span class="fc" id="fc-alta">0</span></div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th><input type="checkbox" id="cb-all" onchange="toggleAll(this)"></th>
+          <th>Lead</th><th>Status</th><th>Contato</th><th>Episódio</th><th>Transcript</th><th>Score</th><th>Mensagem</th><th>Ação</th>
+        </tr></thead>
+        <tbody id="atbody"></tbody>
+      </table>
+    </div>
+    <div id="aprov-pagination" class="pagination"></div>
+    <div class="vtag">V58.22-PRO: Auto Hunt com watchdog, lote ao vivo, anti-processo duplicado e modo 403-safe.</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btool" onclick="expCSV()">⬇️ Exportar CSV</button>
+    <button class="btool" onclick="copiarLista()">📋 Copiar lista</button>
+    <div class="tsep"></div>
+    <button class="btool" id="btn-dl" disabled>⬇️ Baixar lote</button>
+    <button class="btool" id="btn-crm" disabled>📋 Enviar pro CRM</button>
+    <button class="btool" id="btn-rec" disabled>🔄 Recoletar</button>
+    <div class="tsep"></div>
+    <div class="ctrl-in">
+      <span class="ctrl-lbl">Workers coleta</span>
+      <input type="number" class="ctrl-num" value="1" min="1" max="2">
+    </div>
+    <div class="ctrl-in">
+      <span class="ctrl-lbl">Fallback vídeos</span>
+      <input type="number" class="ctrl-num" value="2" min="1" max="3">
+    </div>
+    <label class="ctrl-in" style="border-color:rgba(46,255,160,0.18);background:rgba(46,255,160,0.05);cursor:pointer">
+      <input type="checkbox" class="ctrl-chk" checked>
+      <span class="ctrl-lbl" style="color:var(--gr)">Auto coletar ao aprovar</span>
+    </label>
+  </div>
+</div>
+
+<div class="drawer" id="drawer-reprov">
+  <div class="drawer-head">
+    <div class="drawer-title">✗ Leads descartados (<span id="rc">0</span>)</div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Canal</th><th>Motivo</th><th>Nicho</th><th>Score</th><th>Data</th></tr></thead>
+        <tbody id="rtbody"></tbody>
+      </table>
+    </div>
+    <div id="reprov-pagination" class="pagination"></div>
+  </div>
+  <div class="toolbar">
+    <button class="btool" onclick="expReprovCSV()">⬇️ Exportar reprovados</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════ -->
+<script>
+// ── ESTADO GLOBAL ─────────────────────────────────────────
+const BASE = window.location.origin;
+let currentStep = 1;
+let engineMode = 'api';
+let huntType = 'longform';
+let perfMode = 'normal';
+let aprovados = [];
+let reprovados_data = [];
+let selAprov = new Set();
+let aprovadosFiltro = 'todos';
+let aprovadosPage = 1;
+const PER_PAGE = 20;
+let autoHuntOn = false;
+
+// lote
+let currentLote = [];
+let currentIndex = 0;
+let batchSize = 5;
+let sel = new Set();
+
+// polling
+let statusTimer = null;
+let logTimer = null;
+let lastLogTail = '';
+
+// ── HELPERS ──────────────────────────────────────────────
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function scoreColor(s){s=parseInt(s||0);return s>=80?'var(--gr)':s>=60?'var(--ye)':'var(--rd)'}
+function fmtNum(n){n=parseInt(n||0);return n>=1000?(n/1000).toFixed(n>=1000000?0:1).replace(/\.0$/,'')+(n>=1000000?'M':'K'):String(n)}
+
+// V-SaaS: Gerenciamento de Auth
+function getAuthPassword() {
+  return localStorage.getItem('thon_auth_password') || '';
+}
+function setAuthPassword(pw) {
+  localStorage.setItem('thon_auth_password', pw);
+}
+function clearAuthPassword() {
+  localStorage.removeItem('thon_auth_password');
+}
+
+async function api(path, opts={}){
+  try{
+    const headers = {'Content-Type':'application/json', ...(opts.headers|| {})};
+    // V-SaaS: anexa header de auth se tiver senha salva
+    const pw = getAuthPassword();
+    if (pw) headers['X-THON-Auth'] = pw;
+    
+    const r = await fetch(path, {method:opts.method||'GET', headers, body:opts.body?JSON.stringify(opts.body):undefined});
+    if (r.status === 401) {
+      clearAuthPassword();
+      showLoginScreen('Senha inválida ou expirada. Digite novamente:');
+      throw new Error('Unauthorized');
+    }
+    const txt = await r.text();
+    try{ return JSON.parse(txt); }catch(e){ return {ok:false, erro:txt.substring(0,200)}; }
+  }catch(e){ return {ok:false, erro:e.message}; }
+}
+
+// V-SaaS: Tela de login
+function showLoginScreen(msg) {
+  let loginDiv = document.getElementById('thon-login-overlay');
+  if (!loginDiv) {
+    loginDiv = document.createElement('div');
+    loginDiv.id = 'thon-login-overlay';
+    loginDiv.style.cssText = 'position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;';
+    document.body.appendChild(loginDiv);
+  }
+  loginDiv.innerHTML = `
+    <div style="text-align:center;max-width:400px;padding:40px;background:var(--s1);border:1px solid var(--bd);border-radius:16px;">
+      <div style="font-size:32px;margin-bottom:8px">🔒</div>
+      <h2 style="color:var(--tx);font-size:20px;margin-bottom:8px">THON Toolkit</h2>
+      <p style="color:var(--mu);font-size:12px;margin-bottom:20px">${msg || 'Digite a senha de acesso:'}</p>
+      <input type="password" id="thon-login-input" placeholder="Senha..." style="width:100%;padding:12px;border-radius:8px;background:var(--s2);border:1px solid var(--bd);color:var(--tx);font-family:var(--mo);font-size:14px;outline:none;text-align:center" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <button onclick="doLogin()" style="width:100%;margin-top:12px;padding:12px;border-radius:8px;background:linear-gradient(135deg,#00d4ff,#2effa0);border:none;color:#03100f;font-weight:700;cursor:pointer">Entrar →</button>
+    </div>
+  `;
+  loginDiv.style.display = 'flex';
+  setTimeout(() => {
+    const inp = document.getElementById('thon-login-input');
+    if (inp) inp.focus();
+  }, 100);
+}
+
+async function doLogin() {
+  const inp = document.getElementById('thon-login-input');
+  if (!inp) return;
+  const pw = inp.value.trim();
+  if (!pw) return;
+  
+  setAuthPassword(pw);
+  
+  // Testa a senha fazendo uma chamada simples
+  const r = await fetch('/prospector/status', {headers: {'X-THON-Auth': pw}});
+  if (r.status === 200) {
+    document.getElementById('thon-login-overlay').style.display = 'none';
+    location.reload(); // recarrega pra iniciar o app com auth
+  } else {
+    clearAuthPassword();
+    showLoginScreen('❌ Senha incorreta. Tente novamente:');
+  }
+}
+
+function alrt(m,type='',d=5000){const e=document.getElementById('alrt');e.textContent=m;e.className='alrt'+(type?' '+type:'');e.style.display='block';setTimeout(()=>e.style.display='none',d)}
+
+// ── NAVEGAÇÃO ─────────────────────────────────────────────
+function goStep(n){
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('step-'+n).classList.add('active');
+  document.querySelectorAll('.nav-step').forEach(s=>{
+    const sn = parseInt(s.dataset.step);
+    s.classList.remove('active','done');
+    if(sn === n) s.classList.add('active');
+    else if(sn < n) s.classList.add('done');
+  });
+  currentStep = n;
+  window.scrollTo({top:0,behavior:'smooth'});
+  // V58.28: para polling quando sai do Step 6, inicia quando entra
+  if(n===6){ startPolling(); }
+  else { stopPolling(); }
+  if(n===7){ carregarLoteDoBackend(); atualizarContadores(); }
+  // V58.28: atualiza contadores em todas as transicoes
+  atualizarContadores();
+}
+
+// ── ENGINE / HUNT / PERF ─────────────────────────────────
+function setEngine(el){
+  document.querySelectorAll('.engine-card').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  engineMode = el.dataset.v;
+  // V58.23: nao chama /api/engine_mode aqui para evitar race condition.
+  // O engine_mode vai no body do iniciarGarimpo.
+  // Apenas atualiza o UI:
+  const tag = el.querySelector('.ec-tag');
+  if(autoHuntOn && engineMode !== 'dlp'){
+    alrt('⚠️ Auto Hunt exige engine DLP. Desligue o Auto Hunt ou troque para DLP.', 'err', 5000);
+  }
+}
+function setHunt(el){
+  document.querySelectorAll('.hunt-card').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  huntType = el.dataset.v;
+}
+function setPerf(el){
+  document.querySelectorAll('.perf-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  perfMode = el.dataset.v;
+  const presets={baixo:{w:2,ct:400,ql:100},normal:{w:4,ct:700,ql:180},alto:{w:8,ct:1200,ql:280},extremo:{w:12,ct:4000,ql:420}};
+  const p=presets[perfMode]||presets.normal;
+  document.getElementById('workers').value=p.w;
+  document.getElementById('candidate-target').value=p.ct;
+  document.getElementById('query-limit').value=p.ql;
+}
+
+// ── NICHOS ───────────────────────────────────────────────
+function addNicho(){
+  const i=document.getElementById('ci'), v=i.value.trim();
+  if(!v) return;
+  const b=document.createElement('button');
+  b.className='nb on'; b.dataset.v=v.toLowerCase();
+  b.innerHTML=`<div class="dot"></div>${esc(v)} <span class="rm" onclick="event.stopPropagation();this.closest('button').remove()">×</span>`;
+  b.onclick=function(){this.classList.toggle('on')};
+  document.getElementById('ng').appendChild(b);
+  i.value='';
+}
+
+// ── AUTO HUNT ────────────────────────────────────────────
+function toggleAutoHunt(cb){
+  autoHuntOn = cb.checked;
+  const st = document.getElementById('auto-hunt-status');
+  st.textContent = autoHuntOn ? 'LIGADO' : 'DESLIGADO';
+  st.className = autoHuntOn ? 'status-text on' : 'status-text';
+  document.getElementById('hunt-badge').style.display = autoHuntOn ? 'flex' : 'none';
+}
+
+// ── COLETA DE CONFIG ─────────────────────────────────────
+function coletarConfig(){
+  const nichos = [...document.querySelectorAll('#ng .nb.on')].map(b=>b.dataset.v);
+  const perfis = [...document.querySelectorAll('#pg .nb.on')].map(b=>b.dataset.v);
+  const regioes = [...document.querySelectorAll('#tg .terr-card.on')].map(b=>b.dataset.v);
+  const query = document.getElementById('query-personalizada').value.trim();
+  const config = {
+    nichos: nichos.length ? nichos : ['empreendedorismo'],
+    perfis,
+    formatos: [huntType],
+    regioes,
+    query_personalizada: query,
+    queries_extras: query ? [query] : [],
+    performance: perfMode,
+    engine_mode: engineMode,
+    score_min: parseInt(document.getElementById('score-min').value)||55,
+    workers: parseInt(document.getElementById('workers').value)||4,
+    query_workers: parseInt(document.getElementById('query-workers').value)||6,
+    candidate_target: parseInt(document.getElementById('candidate-target').value)||700,
+    query_limit: parseInt(document.getElementById('query-limit').value)||180,
+    pages_per_query: parseInt(document.getElementById('pages-per-query').value)||2,
+    videos_per_channel: parseInt(document.getElementById('videos-per-channel').value)||5,
+    min_subs: parseInt(document.getElementById('min-subs').value)||10000,
+    max_subs: parseInt(document.getElementById('max-subs').value)||200000,
+    min_longos: parseInt(document.getElementById('min-longos').value)||1,
+    max_last_days: parseInt(document.getElementById('max-last-days').value)||365,
+    ytdlp_verify_max: parseInt(document.getElementById('ytdlp-verify-max').value)||160,
+    lote_size: parseInt(document.getElementById('batch-size').value)||5,
+  };
+  return config;
+}
+
+// ── INICIAR GARIMPO ──────────────────────────────────────
+async function iniciarGarimpo(){
+  const n = [...document.querySelectorAll('#ng .nb.on')].map(b=>b.dataset.v);
+  const q = document.getElementById('query-personalizada').value.trim();
+  if(!n.length && !q){ alrt('Selecione nichos ou digite uma busca personalizada!','err'); return; }
+
+  // V58.23: valida territorio selecionado
+  const regioes = [...document.querySelectorAll('#tg .terr-card.on')].map(b=>b.dataset.v);
+  if(!regioes.length){
+    alrt('Selecione ao menos um território! (BR, PT, etc)','err');
+    return;
+  }
+
+  const config = coletarConfig();
+  const btn = document.getElementById('btn-run');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin">◐</span> Iniciando...';
+
+  // V58.23: reseta estado antes de iniciar (destrava se backend travou em rodando=True)
+  await api('/api/reset_estado', {method:'POST'});
+  // Pequeno sleep para o backend processar o reset
+  await new Promise(r=>setTimeout(r, 200));
+
+  let endpoint;
+  if(engineMode === 'dlp'){
+    endpoint = '/api/prospector_dlp/start';
+  }else{
+    // api OU api_multi_source_fast — backend agora respeita engine_mode do body
+    endpoint = '/api/prospector_api/start';
+  }
+
+  console.log('[GARIMPO] iniciando', {endpoint, engineMode, config});
+  const r = await api(endpoint, {method:'POST', body:config});
+  console.log('[GARIMPO] resposta', r);
+  btn.disabled = false;
+  btn.innerHTML = '🎯 Iniciar Garimpo';
+
+  if(!r.ok){
+    const errMsg = r.erro || 'desconhecido';
+    if(errMsg.includes('já está rodando') || errMsg.toLowerCase().includes('rodando')){
+      alrt('Backend diz que já está rodando. Clique em "⏹ Parar tudo" e tente de novo. Detalhe: '+errMsg, 'err', 8000);
+    }else{
+      alrt('Erro ao iniciar: '+errMsg, 'err', 8000);
+    }
+    return;
+  }
+
+  // Se Auto Hunt ligado, dispara também
+  if(autoHuntOn && engineMode === 'dlp'){
+    const ah = await api('/auto_hunt', {method:'POST', body:{enabled:true, config}});
+    if(ah.ok){
+      document.getElementById('hunt-badge').style.display = 'flex';
+      alrt('✅ Auto Hunt ligado! Ciclos automáticos ativos.', 'ok', 4000);
+    }else{
+      alrt('⚠️ Auto Hunt falhou: '+(ah.erro||''), 'err', 6000);
+    }
+  }
+
+  goStep(6);
+}
+
+// ── PARAR / PAUSAR / RETOMAR / RESET ─────────────────────
+async function pararBusca(){
+  await api('/prospector/stop', {method:'POST'});
+  if(autoHuntOn){
+    await api('/auto_hunt', {method:'POST', body:{enabled:false}});
+  }
+  alrt('Busca interrompida.','ok',3000);
+}
+async function stopBackend(){
+  if(!confirm('Parar todo o backend agora?')) return;
+  await api('/prospector/stop', {method:'POST'});
+  await api('/auto_hunt', {method:'POST', body:{enabled:false}});
+  alrt('Backend parado.','ok',3000);
+}
+async function pauseBackend(){
+  const r = await api('/prospector/pause', {method:'POST'});
+  alrt(r.ok?'Backend pausado.':'Erro: '+(r.erro||''),'ok',3000);
+}
+async function resumeBackend(){
+  const r = await api('/prospector/resume', {method:'POST'});
+  alrt(r.ok?'Backend retomado.':'Erro: '+(r.erro||''),'ok',3000);
+}
+async function resetBanco(){
+  if(!confirm('Resetar banco de vistos/aprovados/reprovados? Esta ação não pode ser desfeita.')) return;
+  const r = await api('/reset_memoria', {method:'POST'});
+  alrt(r.ok?'Banco resetado.':'Erro: '+(r.erro||''),'ok',3000);
+  carregarAprovados();
+  carregarReprovados();
+}
+function openTerminal(){
+  window.open('/engine-console','_blank');
+}
+
+// ── POLLING DE STATUS ────────────────────────────────────
+function startPolling(){
+  if(statusTimer) clearInterval(statusTimer);
+  if(logTimer) clearInterval(logTimer);
+  pollStatus();
+  pollLog();
+  statusTimer = setInterval(pollStatus, 1800);
+  logTimer = setInterval(pollLog, 2500);
+}
+function stopPolling(){
+  if(statusTimer){ clearInterval(statusTimer); statusTimer=null; }
+  if(logTimer){ clearInterval(logTimer); logTimer=null; }
+}
+
+async function pollStatus(){
+  const r = await api('/prospector/status');
+  if(!r || !r.ok) return;
+
+  document.getElementById('hd-engine').textContent = r.engine_mode || '—';
+  document.getElementById('hd-status').textContent = r.status || 'idle';
+  document.getElementById('lote-engine').textContent = r.engine_mode || '—';
+
+  const q = r.queries_processadas || 0;
+  const c = r.candidatos_encontrados || 0;
+  const v = r.verificados || 0;
+  const ql = r.qualificados || 0;
+  const ap = r.aprovados_count || 0;
+  const rp = r.reprovados_count || 0;
+
+  // Atualiza métricas
+  document.getElementById('lv-queries').textContent = q;
+  document.getElementById('lv-cand').textContent = c;
+  document.getElementById('lv-ver').textContent = v;
+  document.getElementById('lv-qual').textContent = ql;
+  document.getElementById('lv-ap').textContent = ap;
+  document.getElementById('lv-rp').textContent = rp;
+
+  document.getElementById('squeries').textContent = q;
+  document.getElementById('scandidates').textContent = c;
+  document.getElementById('sv').textContent = v;
+  document.getElementById('sq').textContent = ql;
+  document.getElementById('sa').textContent = ap;
+  document.getElementById('sr').textContent = rp;
+
+  document.getElementById('smsg').textContent = r.msg || '—';
+  document.getElementById('sstage').textContent = r.pipeline_stage || r.stage || '—';
+
+  // Atualiza header nav counts
+  document.getElementById('nav-ac').textContent = ap;
+  document.getElementById('nav-rc').textContent = rp;
+
+  // Quota
+  document.getElementById('lv-quota-used').textContent = r.api_quota_used || 0;
+  document.getElementById('lv-quota-budget').textContent = r.api_quota_budget || 9000;
+  document.getElementById('lv-brutos').textContent = r.brutos_total || 0;
+  document.getElementById('lv-dlp-queue').textContent = r.dlp_queue_count || 0;
+  document.getElementById('lv-cycles').textContent = (r.auto_hunt && r.auto_hunt.cycles) || 0;
+
+  // Atualiza chaves/quota no header da etapa 1
+  document.getElementById('hd-keys').textContent = r.api_channels_detailed || '—';
+  document.getElementById('hd-quota').textContent = (r.api_quota_pct || 0) + '%';
+
+  // Bars
+  const qLim = r.api_query_limit || parseInt(document.getElementById('query-limit').value)||180;
+  const cTgt = r.api_candidate_target || r.target_candidatos || parseInt(document.getElementById('candidate-target').value)||700;
+  document.getElementById('lv-queries-bar').style.width = Math.min((q/Math.max(1,qLim))*100,100)+'%';
+  document.getElementById('lv-cand-bar').style.width = Math.min((c/Math.max(1,cTgt))*100,100)+'%';
+  document.getElementById('lv-ver-bar').style.width = c?Math.min((v/Math.max(1,c))*100,100)+'%':'0%';
+  document.getElementById('lv-qual-bar').style.width = v?Math.min((ql/Math.max(1,v))*100,100)+'%':'0%';
+  document.getElementById('pb').style.width = Math.min((q/Math.max(1,qLim))*100,100)+'%';
+
+  // Console dot
+  const dot = document.getElementById('console-dot');
+  dot.className = 'console-dot' + (r.rodando ? '' : (r.status==='erro'?' err':' idle'));
+
+  // Pipeline timeline
+  const stage = (r.pipeline_stage || r.stage || '').toLowerCase();
+  const tl1 = document.getElementById('tl-1');
+  const tl2 = document.getElementById('tl-2');
+  const tl3 = document.getElementById('tl-3');
+  const tl4 = document.getElementById('tl-4');
+  [tl1,tl2,tl3,tl4].forEach(el=>{el.classList.remove('done','active');el.querySelector('.tl-dot').textContent=el.id.split('-')[1]});
+
+  if(stage.includes('descoberta') || stage.includes('start') || stage.includes('buscando')){
+    tl1.classList.add('active');
+  }else if(stage.includes('verif') || stage.includes('dlp')){
+    tl1.classList.add('done'); tl1.querySelector('.tl-dot').textContent='✓';
+    tl2.classList.add('active');
+  }else if(stage.includes('qualif') || stage.includes('aguardando_revisao')){
+    tl1.classList.add('done'); tl1.querySelector('.tl-dot').textContent='✓';
+    tl2.classList.add('done'); tl2.querySelector('.tl-dot').textContent='✓';
+    tl3.classList.add('active');
+  }else if(stage.includes('fim') || stage.includes('concluido') || stage.includes('aguardando') || stage.includes('lote')){
+    tl1.classList.add('done'); tl1.querySelector('.tl-dot').textContent='✓';
+    tl2.classList.add('done'); tl2.querySelector('.tl-dot').textContent='✓';
+    tl3.classList.add('done'); tl3.querySelector('.tl-dot').textContent='✓';
+    tl4.classList.add('active');
+  }
+
+  // Auto-refresh do lote se rodando
+  if(r.rodando && r.lote_count > 0 && currentStep === 6){
+    // só atualiza se user está em live; se mudar pra step 7 o polling de lá cuida
+  }
+
+  // Se auto hunt terminou um ciclo, atualiza lote automaticamente
+  if(!r.rodando && r.lote_count > 0 && currentStep === 6){
+    // Auto-avança para o lote quando termina
+    if(stage.includes('fim') || stage.includes('concluido') || stage.includes('aguardando')){
+      // Não avança automaticamente, mas sugere
+      document.getElementById('smsg').innerHTML = '✅ Ciclo concluído! Lote pronto — vá para a etapa 7 para revisar.';
+    }
+  }
+}
+
+async function pollLog(){
+  const r = await api('/logs/backend?linhas=40');
+  if(!r || !r.ok) return;
+  const tail = r.tail || r.log || '';
+  if(tail === lastLogTail) return;
+  lastLogTail = tail;
+  renderLog(tail);
+}
+
+function renderLog(tail){
+  const log = document.getElementById('console-log');
+  const lines = tail.split('\n').filter(l=>l.length);
+  const html = lines.map(line=>{
+    let cls = 'log-sys';
+    let msg = esc(line);
+    if(/\[QUERY\]|query|buscando/i.test(line)) cls='log-query';
+    else if(/\[HIT\]|hit|qualificado/i.test(line)) cls='log-hit';
+    else if(/\[SKIP\]|skip|reprovado|descart/i.test(line)) cls='log-skip';
+    else if(/\[QUALIFY\]|qualify/i.test(line)) cls='log-qual';
+    else if(/\[ERR\]|erro|error|429|403|falha/i.test(line)) cls='log-err';
+    else if(/stage|etapa|pipeline/i.test(line)) cls='log-stage';
+    else if(/warn|aviso/i.test(line)) cls='log-warn';
+    return '<span class="'+cls+'">'+msg+'</span>';
+  }).join('\n');
+  log.innerHTML = html + (tail?'':'\n<span class="log-sys">// aguardando logs do backend...</span>');
+  log.scrollTop = log.scrollHeight;
+}
+
+function refreshLog(){pollLog()}
+
+// ── LOTE DE CAÇA ─────────────────────────────────────────
+async function carregarLoteDoBackend(){
+  const r = await api('/api/fila_pendente');
+  if(!r || !r.ok){ return; }
+  currentLote = (r.lote || []).map(normalizarCanal);
+  currentIndex = 0; sel.clear();
+  document.getElementById('lote-total').textContent = currentLote.length;
+  document.getElementById('lote-live-count').textContent = currentLote.length+' no lote';
+  renderLote();
+}
+
+function normalizarCanal(c){
+  return {
+    id: c.id || c.channel_id || '',
+    nome: c.nome || c.title || 'Canal',
+    url: c.url || (c.id ? 'https://youtube.com/channel/'+c.id : ''),
+    subs: c.subs_fmt || fmtNum(c.subs || c.inscritos || 0),
+    subs_raw: c.subs || c.inscritos || 0,
+    nicho: c.nicho || c.source_query || '',
+    score: c.score || c.api_score || 0,
+    status: c.status || 'pendente',
+    ep: c.ultimo_episodio_titulo || c.source_video_title || c.video_title || '',
+    trans: c.transcricao_status || c.trans || '',
+    contato: c.contato || c.instagram_handle || c.email || '',
+    email: c.email || '',
+    instagram: c.instagram_handle || '',
+    instagram_link: c.instagram_link || '',
+    tem_contato: c.tem_contato || false,
+    prioridade: (c.score||0) >= 80 ? 'alta' : 'normal',
+    err: c.erro || false,
+    thumb: c.avatar_url || c.thumbnail || c.thumb || '',
+    longos: c.longos || 0,
+    shorts: c.shorts || 0,
+    views: c.views || c.recent_avg_views || 0,
+    country: c.country || '',
+    // V58.26 campos novos
+    score_tags: c.score_tags_v26 || c.score_tags || [],
+    sinais_monetizacao: c.sinais_monetizacao || [],
+    sinais_profissional: c.sinais_profissional || [],
+    ja_tem_editor: c.ja_tem_editor || false,
+    editor_detectado: c.editor_detectado || '',
+    concorrente_blacklist: c.concorrente_blacklist || false,
+  };
+}
+
+function renderLote(){
+  const container = document.getElementById('lote-cards');
+  if(!currentLote.length){
+    container.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="ic">🎯</div><div class="ti">Lote vazio</div><div class="sb">Inicie um garimpo ou reconstrua a fila dos brutos.</div></div>`;
+    document.getElementById('lote-prog').style.width = '0%';
+    return;
+  }
+  // V58.26 #11: garantir ordenacao por score (maior primeiro) mesmo no frontend
+  const sortedLote = [...currentLote].sort((a,b) => (parseInt(b.score||0) - parseInt(a.score||0)) || (parseInt(b.subs_raw||0) - parseInt(a.subs_raw||0)));
+  const start = currentIndex;
+  const end = Math.min(currentIndex + batchSize, sortedLote.length);
+  const batch = sortedLote.slice(start, end);
+  container.innerHTML = batch.map(c=>{
+    const sc = parseInt(c.score||0);
+    const scClass = sc>=80?'score-high':sc>=60?'score-mid':'score-low';
+    const scCol = scoreColor(sc);
+    const tags = [];
+
+    // V58.26 #5: badge "ja tem editor" (reprovado automatico)
+    if(c.ja_tem_editor){
+      tags.push(`<span class="tag tag-rd" title="${esc(c.editor_detectado||'')}">❌ tem editor</span>`);
+    }
+    // V58.26 #4: badge concorrente blacklist
+    if(c.concorrente_blacklist){
+      tags.push('<span class="tag tag-rd">🚫 concorrente</span>');
+    }
+    // V58.32: badge country (mostra pais do canal)
+    if(c.country){
+      const countryFlag = {'BR':'🇧🇷','US':'🇺🇸','PT':'🇵🇹','GB':'🇬🇧','ES':'🇪🇸','MX':'🇲🇽','AR':'🇦🇷','CO':'🇨🇴','CL':'🇨🇱','CA':'🇨🇦','AU':'🇦🇺','DE':'🇩🇪','FR':'🇫🇷','IT':'🇮🇹'}[c.country] || '🌍';
+      const tagClass = c.country === 'BR' ? 'tag-gr' : (c.country === 'PT' ? 'tag-gr' : 'tag-rd');
+      tags.push(`<span class="tag ${tagClass}" title="País: ${esc(c.country)}">${countryFlag} ${esc(c.country)}</span>`);
+    }
+    // V58.26 #8: badge monetizado
+    if(c.sinais_monetizacao && c.sinais_monetizacao.length){
+      tags.push(`<span class="tag tag-gr" title="${esc(c.sinais_monetizacao.join(', '))}">💰 monetizado (${c.sinais_monetizacao.length})</span>`);
+    }
+    // V58.26 #1: badge email + IG
+    if(c.email){
+      tags.push(`<span class="tag tag-gr" title="${esc(c.email)}">📧 email</span>`);
+    }
+    if(c.instagram){
+      tags.push(`<span class="tag tag-bl" title="${esc(c.instagram)}">📷 IG ${esc(c.instagram)}</span>`);
+    }
+    if(c.tem_contato === false && !c.email && !c.instagram){
+      tags.push('<span class="tag tag-ye">📭 sem contato</span>');
+    }
+    // Tags originais
+    if(c.trans === 'ok' || c.transcricao_status === 'ok') tags.push('<span class="tag tag-gr">📄 transcript</span>');
+    if(c.prioridade === 'alta') tags.push('<span class="tag tag-bl">🔥 alta prioridade</span>');
+    if(parseInt(c.longos||0) >= 3) tags.push(`<span class="tag tag-gr">🎬 longos: ${c.longos}</span>`);
+    if(parseInt(c.shorts||0) >= 4) tags.push(`<span class="tag tag-rd">✂️ shorts: ${c.shorts}</span>`);
+
+    // V58.26 #13: tags explicativas do score (top 5, so as positivas)
+    const scoreTags = (c.score_tags || []).filter(t => !t.startsWith('tendencia') && !t.includes('comprada') && !t.includes('mortas')).slice(0, 6);
+    const tagsHtml = tags.join('') + (scoreTags.length ? `<div class="cc-score-reasons" title="${esc((c.score_tags||[]).join(', '))}">${scoreTags.map(t => `<span class="tag tag-mu" style="font-size:9px;padding:2px 6px">${esc(t)}</span>`).join('')}</div>` : '');
+
+    const thumbHtml = c.thumb ? `<img src="${esc(c.thumb)}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'cc-ph\\'>🎬</div>'">` : '<div class="cc-ph">🎬</div>';
+    return `<div class="cc ${scClass} ${sel.has(c.id)?'sel':''}" data-id="${esc(c.id)}" onclick="toggleSel('${esc(c.id)}',this)">
+      <div class="cc-header">
+        <div class="cc-thumb">${thumbHtml}</div>
+        <div class="cc-info">
+          <div class="cc-name">${esc(c.nome)}</div>
+          <a class="cc-link" href="${esc(c.url)}" target="_blank" onclick="event.stopPropagation()">${esc(c.url)}</a>
+          ${c.instagram_link ? `<a class="cc-link" href="${esc(c.instagram_link)}" target="_blank" onclick="event.stopPropagation()" style="color:var(--pu)">📷 ${esc(c.instagram)}</a>` : ''}
+          <div class="cc-vt">🎥 ${esc((c.ep||'—').substring(0,55))}</div>
+        </div>
+      </div>
+      <div class="cc-metrics">
+        <div class="cc-metric"><div class="cc-metric-label">inscritos</div><div class="cc-metric-val">${esc(c.subs||'—')}</div></div>
+        <div class="cc-metric"><div class="cc-metric-label">nicho</div><div class="cc-metric-val" style="font-size:10px">${esc(c.nicho||'—')}</div></div>
+        <div class="cc-metric"><div class="cc-metric-label">score</div><div class="cc-metric-val" style="color:${scCol};font-weight:700">${sc}</div></div>
+        <div class="cc-metric"><div class="cc-metric-label">longos</div><div class="cc-metric-val">${c.longos||0}</div></div>
+      </div>
+      <div class="score-bar"><div class="score-fill" style="width:${sc}%;background:${scCol}"></div></div>
+      <div class="cc-tags">${tagsHtml}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('lote-current').textContent = Math.min(currentIndex+batchSize, sortedLote.length);
+  document.getElementById('lote-prog').style.width = sortedLote.length ? (currentIndex/sortedLote.length)*100+'%' : '0%';
+  updateLoteActions();
+}
+
+function toggleSel(id, el){
+  if(sel.has(id)){ sel.delete(id); el.classList.remove('sel'); }
+  else{ sel.add(id); el.classList.add('sel'); }
+  updateLoteActions();
+}
+function updateLoteActions(){
+  const n = sel.size;
+  const vn = Math.min(batchSize, currentLote.length - currentIndex);
+  document.getElementById('btn-approve').textContent = n ? `✓ Aprovar selecionados (${n})` : `✓ Aprovar visíveis (${vn})`;
+  document.getElementById('btn-discard').textContent = n ? `✗ Descartar selecionados (${n})` : `✗ Descartar visíveis (${vn})`;
+}
+
+async function aprovarAtual(){
+  const ids = sel.size ? [...sel] : currentLote.slice(currentIndex, currentIndex+batchSize).map(c=>c.id);
+  if(!ids.length){ alrt('Nada para aprovar.','err',3000); return; }
+  const r = await api('/aprovar', {method:'POST', body:{ids}});
+  if(!r.ok){ alrt('Erro: '+(r.erro||''),'err'); return; }
+  sel.clear();
+  await carregarLoteDoBackend();
+  await carregarAprovados();
+  await atualizarContadores();  // V58.28: sincroniza todos os contadores
+  alrt(`✓ ${r.aprovados_novos||0} aprovado(s). Total: ${r.total||0}`,'ok',3000);
+}
+
+async function descartarAtual(){
+  const ids = sel.size ? [...sel] : currentLote.slice(currentIndex, currentIndex+batchSize).map(c=>c.id);
+  if(!ids.length){ alrt('Nada para descartar.','err',3000); return; }
+  const motivo = prompt('Motivo do descarte:', 'Descartado manualmente') || 'Descartado manualmente';
+  const r = await api('/descartar', {method:'POST', body:{ids, motivo}});
+  if(!r.ok){ alrt('Erro: '+(r.erro||''),'err'); return; }
+  sel.clear();
+  await carregarLoteDoBackend();
+  await carregarReprovados();
+  await atualizarContadores();  // V58.28: sincroniza todos os contadores
+  alrt(`✗ ${r.descartados||0} descartado(s).`,'ok',3000);
+}
+
+function pularAtual(){
+  currentIndex = Math.min(currentIndex + batchSize, Math.max(0, currentLote.length - batchSize));
+  sel.clear();
+  renderLote();
+}
+
+async function verificarBR(){
+  // Dispara verificação BR para o lote atual
+  const ids = sel.size ? [...sel] : currentLote.slice(currentIndex, currentIndex+batchSize).map(c=>c.id);
+  if(!ids.length){ alrt('Nada para verificar.','err',3000); return; }
+  const r = await api('/api/crm/verificar_br', {method:'POST', body:{ids}});
+  alrt(r.ok ? 'Verificação BR disparada.' : 'Erro: '+(r.erro||''), r.ok?'ok':'err', 3000);
+}
+
+async function reconstruirFila(){
+  const r = await api('/api/fila_pendente/reconstruir', {method:'POST', body:{limit:500}});
+  alrt(r.ok ? 'Fila reconstruída dos brutos.' : 'Erro: '+(r.erro||''), r.ok?'ok':'err', 3000);
+  await carregarLoteDoBackend();
+}
+
+async function limparFila(){
+  if(!confirm('Limpar toda a fila pendente? Os canais já aprovados/reprovados permanecem.')) return;
+  const r = await api('/api/fila_pendente/limpar', {method:'POST'});
+  alrt(r.ok?'Fila limpa.':'Erro: '+(r.erro||''), r.ok?'ok':'err', 3000);
+  await carregarLoteDoBackend();
+}
+
+// ── DRAWERS ──────────────────────────────────────────────
+function openDrawer(which){
+  document.getElementById('overlay').classList.add('on');
+  document.getElementById('drawer-aprov').classList.remove('on');
+  document.getElementById('drawer-reprov').classList.remove('on');
+  document.getElementById('drawer-'+which).classList.add('on');
+  if(which==='aprov') carregarAprovados();
+  else carregarReprovados();
+}
+function closeDrawer(){
+  document.getElementById('overlay').classList.remove('on');
+  document.getElementById('drawer-aprov').classList.remove('on');
+  document.getElementById('drawer-reprov').classList.remove('on');
+}
+
+// ── APROVADOS / REPROVADOS ───────────────────────────────
+async function carregarAprovados(){
+  const r = await api('/aprovados');
+  if(!r || !r.ok) return;
+  aprovados = (r.canais || []).map(normalizarCanal);
+  // V58.28: usa r.total (real do backend) em vez de aprovados.length (carregado)
+  const total = r.total ?? aprovados.length;
+  document.getElementById('nav-ac').textContent = total;
+  document.getElementById('ac').textContent = total;
+  renderAprovados();
+}
+
+async function carregarReprovados(){
+  const r = await api('/reprovados?per_page=500');
+  if(!r || !r.ok) return;
+  reprovados_data = (r.reprovados || []).map(c=>({
+    ...normalizarCanal(c),
+    motivo: c.motivo || 'Descartado',
+    data: c.data || ''
+  }));
+  // V58.28: usa r.total (real do backend) em vez de reprovados_data.length (limitado a 500)
+  const total = r.total ?? reprovados_data.length;
+  document.getElementById('nav-rc').textContent = total;
+  document.getElementById('rc').textContent = total;
+  renderReprovados();
+}
+
+// V58.28: funcao unificada pra atualizar TODOS os contadores do backend
+async function atualizarContadores(){
+  const r = await api('/prospector/status');
+  if(!r || !r.ok) return;
+  const ap = r.aprovados_count || 0;
+  const rp = r.reprovados_count || 0;
+  const lote = r.lote_count || 0;
+  // Atualiza todos os elementos de contagem
+  document.getElementById('nav-ac').textContent = ap;
+  document.getElementById('nav-rc').textContent = rp;
+  document.getElementById('ac').textContent = ap;
+  document.getElementById('rc').textContent = rp;
+  // Step 6 live counts
+  if(document.getElementById('sa')) document.getElementById('sa').textContent = ap;
+  if(document.getElementById('sr')) document.getElementById('sr').textContent = rp;
+  if(document.getElementById('lv-ap')) document.getElementById('lv-ap').textContent = ap;
+  if(document.getElementById('lv-rp')) document.getElementById('lv-rp').textContent = rp;
+  return {ap, rp, lote};
+}
+
+function filteredLeads(){
+  const f = aprovadosFiltro;
+  if(f==='todos') return aprovados;
+  if(f==='pronto') return aprovados.filter(l=>l.status==='pronto');
+  if(f==='revisar') return aprovados.filter(l=>l.status==='revisar');
+  if(f==='sem_trans') return aprovados.filter(l=>l.trans!=='ok');
+  if(f==='sem_contato') return aprovados.filter(l=>!l.contato);
+  if(f==='erro') return aprovados.filter(l=>l.err);
+  if(f==='alta') return aprovados.filter(l=>l.prioridade==='alta');
+  return aprovados;
+}
+
+function scoreRing(s){
+  s = parseInt(s||0);
+  const c = scoreColor(s);
+  const r = 13, circ = 2*Math.PI*r, dash = (s/100)*circ;
+  return `<svg class="score-ring" viewBox="0 0 32 32"><circle cx="16" cy="16" r="${r}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="2.5"/><circle cx="16" cy="16" r="${r}" fill="none" stroke="${c}" stroke-width="2.5" stroke-dasharray="${dash.toFixed(1)} ${circ.toFixed(1)}" stroke-linecap="round" transform="rotate(-90 16 16)" style="filter:drop-shadow(0 0 3px ${c}66)"/><text x="16" y="20" text-anchor="middle" font-family="DM Mono" font-size="8" fill="${c}" font-weight="500">${s}</text></svg>`;
+}
+
+function statusBadge(s){
+  if(s==='pronto') return '<span class="badge b-ok">✅ pronto</span>';
+  if(s==='revisar') return '<span class="badge b-warn">👁 revisar</span>';
+  if(s==='sem_trans') return '<span class="badge b-bad">sem trans.</span>';
+  if(s==='sem_contato') return '<span class="badge b-warn">sem contato</span>';
+  if(s==='erro') return '<span class="badge b-bad">⚠️ erro</span>';
+  return `<span class="badge b-mu">${esc(s||'—')}</span>`;
+}
+function transBadge(t){
+  if(t==='ok') return '<span class="badge b-ok">✅ ok</span>';
+  if(t==='429') return '<span class="badge b-bad">429</span>';
+  if(t==='sem' || t==='sem_trans') return '<span class="badge b-bad">sem trans.</span>';
+  return `<span class="badge b-mu">${esc(t||'—')}</span>`;
+}
+
+function renderAprovados(){
+  const lista = filteredLeads();
+  const tb = document.getElementById('atbody');
+  if(!lista.length){
+    tb.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:32px;font-family:var(--mo);font-size:11px;color:var(--mu)">Nenhum lead neste filtro.</td></tr>`;
+    updateCounts();
+    document.getElementById('aprov-pagination').innerHTML = '';
+    return;
+  }
+  const start = (aprovadosPage-1)*PER_PAGE;
+  const slice = lista.slice(start, start+PER_PAGE);
+  tb.innerHTML = slice.map(l=>{
+    const ct = l.contato ? `<span class="badge b-ok">${esc(l.contato)}</span>` : '<span class="badge b-bad">sem contato</span>';
+    const ep = l.ep && l.ep!=='—' ? `<span style="font-family:var(--mo);font-size:10px;color:var(--tx)">${esc(l.ep.substring(0,45))}</span>` : '<span class="badge b-mu">—</span>';
+    const msg = l.mensagem_dm || l.msg ? `<div class="msg-prev">${esc((l.mensagem_dm||l.msg||'').substring(0,80))}…</div>` : '<span class="badge b-mu">—</span>';
+    return `<tr>
+      <td><input type="checkbox" class="ap-cb" data-id="${esc(l.id)}" onchange="toggleSelAprov('${esc(l.id)}',this)" ${selAprov.has(l.id)?'checked':''}></td>
+      <td><div class="cname">${esc(l.nome)}</div><a class="clink" href="${esc(l.url)}" target="_blank">${esc(l.url)}</a><div class="cmeta">${esc(l.subs||'—')} · ${esc(l.nicho||'—')}</div></td>
+      <td>${statusBadge(l.status)}${l.prioridade==='alta'?'<span class="badge b-info">🔥 alta</span>':''}</td>
+      <td>${ct}</td>
+      <td>${ep}</td>
+      <td>${transBadge(l.trans)}</td>
+      <td>${scoreRing(l.score)}</td>
+      <td>${msg}</td>
+      <td class="act-cell">
+        <button class="bact bl" onclick="">📋 Msg</button>
+        <button class="bact" onclick="abrirCanal('${esc(l.url)}')">⬇️ Lead</button>
+        <button class="bact" onclick="">ℹ️ Info</button>
+        <button class="bact rd" onclick="removerAprovado('${esc(l.id)}')">Remover</button>
+      </td>
+    </tr>`;
+  }).join('');
+  updateCounts();
+  renderAprovPagination(lista.length);
+}
+
+function abrirCanal(url){ if(url) window.open(url, '_blank'); }
+
+async function removerAprovado(id){
+  if(!confirm('Remover este canal dos aprovados?')) return;
+  const r = await api('/remover_aprovado', {method:'POST', body:{ids:[id]}});
+  if(r.ok){
+    selAprov.delete(id);
+    await carregarAprovados();
+    await atualizarContadores();  // V58.28
+  }else{
+    alrt('Erro: '+(r.erro||''),'err');
+  }
+}
+
+function renderAprovPagination(total){
+  const pages = Math.ceil(total/PER_PAGE);
+  const el = document.getElementById('aprov-pagination');
+  if(pages<=1){ el.innerHTML=''; return; }
+  el.innerHTML = Array.from({length:pages},(_,i)=>`<button class="pag-btn ${(i+1)===aprovadosPage?'active':''}" onclick="goAprovPage(${i+1})">${i+1}</button>`).join('');
+}
+function goAprovPage(p){ aprovadosPage = p; renderAprovados(); }
+
+function toggleSelAprov(id, cb){ if(cb.checked) selAprov.add(id); else selAprov.delete(id); updateToolbarBtns(); }
+function toggleAll(cb){
+  filteredLeads().forEach(l=>{ if(cb.checked) selAprov.add(l.id); else selAprov.delete(l.id); });
+  document.querySelectorAll('.ap-cb').forEach(c=>c.checked = cb.checked);
+  updateToolbarBtns();
+}
+function updateToolbarBtns(){
+  const n = selAprov.size;
+  document.getElementById('btn-dl').disabled = n===0;
+  document.getElementById('btn-crm').disabled = n===0;
+  document.getElementById('btn-rec').disabled = n===0;
+  document.getElementById('btn-dl').textContent = n ? `⬇️ Baixar lote (${n})` : '⬇️ Baixar lote';
+  document.getElementById('btn-crm').textContent = n ? `📋 Enviar pro CRM (${n})` : '📋 Enviar pro CRM';
+  document.getElementById('btn-rec').textContent = n ? `🔄 Recoletar (${n})` : '🔄 Recoletar';
+}
+
+function updateCounts(){
+  document.getElementById('fc-todos').textContent = aprovados.length;
+  document.getElementById('fc-pronto').textContent = aprovados.filter(l=>l.status==='pronto').length;
+  document.getElementById('fc-revisar').textContent = aprovados.filter(l=>l.status==='revisar').length;
+  document.getElementById('fc-sem_trans').textContent = aprovados.filter(l=>l.trans!=='ok').length;
+  document.getElementById('fc-sem_contato').textContent = aprovados.filter(l=>!l.contato).length;
+  document.getElementById('fc-erro').textContent = aprovados.filter(l=>l.err).length;
+  document.getElementById('fc-alta').textContent = aprovados.filter(l=>l.prioridade==='alta').length;
+}
+
+function setFiltro(f, el){
+  aprovadosFiltro = f; aprovadosPage = 1;
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  renderAprovados();
+}
+
+function renderReprovados(){
+  const tb = document.getElementById('rtbody');
+  if(!reprovados_data.length){
+    tb.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:28px;font-family:var(--mo);font-size:11px;color:var(--mu)">Nenhum lead descartado ainda.</td></tr>`;
+    return;
+  }
+  tb.innerHTML = reprovados_data.slice(0,200).map(c=>`<tr class="rep-row">
+    <td><span class="cname">${esc(c.nome)}</span><a class="clink" href="${esc(c.url)}" target="_blank">${esc(c.url||'')}</a></td>
+    <td style="color:var(--mu)">${esc(c.motivo||'Descartado')}</td>
+    <td style="color:var(--mu)">${esc(c.nicho||'—')}</td>
+    <td style="color:${scoreColor(c.score||0)};font-weight:600">${c.score||0}</td>
+    <td style="color:var(--mu)">${esc((c.data||'').slice(0,10))}</td>
+  </tr>`).join('');
+}
+
+// ── MÉTRICAS DA COLETA (animação) ────────────────────────
+function animarMetricas(){
+  const proc = aprovados.length;
+  const trans = aprovados.filter(l=>l.trans==='ok').length;
+  const strans = aprovados.filter(l=>l.trans && l.trans!=='ok').length;
+  const cont = aprovados.filter(l=>l.contato).length;
+  const pron = aprovados.filter(l=>l.status==='pronto').length;
+  const err = aprovados.filter(l=>l.err).length;
+  document.getElementById('cm-proc').textContent = `${proc}/${proc}`;
+  document.getElementById('cm-trans').textContent = trans;
+  document.getElementById('cm-strans').textContent = strans;
+  document.getElementById('cm-cont').textContent = cont;
+  document.getElementById('cm-pron').textContent = pron;
+  document.getElementById('cm-err').textContent = err;
+  document.getElementById('cbar').style.width = proc ? '100%' : '0%';
+}
+
+// ── CSV / COPY ───────────────────────────────────────────
+function expCSV(){
+  if(!aprovados.length){ alrt('Nada para exportar.','err',3000); return; }
+  const rows = [['Canal','URL','Inscritos','Nicho','Score','Status']];
+  aprovados.forEach(l=>rows.push([l.nome, l.url, l.subs, l.nicho, l.score, l.status]));
+  const csv = rows.map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'}));
+  a.download = `aprovados_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+function expReprovCSV(){
+  if(!reprovados_data.length){ alrt('Nada para exportar.','err',3000); return; }
+  const rows = [['Canal','URL','Nicho','Score','Motivo','Data']];
+  reprovados_data.forEach(c=>rows.push([c.nome, c.url, c.nicho, c.score, c.motivo, (c.data||'').slice(0,10)]));
+  const csv = rows.map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'}));
+  a.download = `reprovados_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+function copiarLista(){
+  const txt = aprovados.map(l=>`${l.nome} | ${l.subs} | Score ${l.score} | ${l.url}`).join('\n');
+  navigator.clipboard.writeText(txt).then(()=>alrt('Lista copiada!','ok',2000)).catch(()=>alrt('Erro ao copiar.','err'));
+}
+
+// ── V58.26 #4: BLACKLIST DE CONCORRENTES ─────────────────
+async function carregarConcorrentes(){
+  const r = await api('/api/concorrentes');
+  const el = document.getElementById('concorrentes-list');
+  if(!r || !r.ok){
+    el.innerHTML = '<div style="color:var(--rd);font-family:var(--mo);font-size:11px;text-align:center;padding:14px">Erro ao carregar</div>';
+    return;
+  }
+  const ids = r.ids || [];
+  if(!ids.length){
+    el.innerHTML = '<div style="color:var(--mu);font-family:var(--mo);font-size:11px;text-align:center;padding:14px">Nenhum concorrente blacklistado.<br>Adicione IDs (UCxxxxx) acima.</div>';
+    return;
+  }
+  el.innerHTML = ids.map(id => `
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;background:var(--s2);border:1px solid var(--bd);border-radius:8px">
+      <span style="font-family:var(--mo);font-size:11px;color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">${esc(id)}</span>
+      <button class="bact rd" style="padding:3px 8px;font-size:10px" onclick="removerConcorrente('${esc(id)}')">✕</button>
+    </div>
+  `).join('');
+}
+async function addConcorrente(){
+  const input = document.getElementById('concorrente-input');
+  let v = input.value.trim();
+  if(!v) return;
+  // extrai UCxxxxxxxx de URL ou input cru
+  const m = v.match(/(UC[0-9A-Za-z_-]{18,})/);
+  const id = m ? m[1] : (v.startsWith('UC') && v.length >= 18 ? v : '');
+  if(!id){
+    alrt('ID inválido. Use UCxxxxxxxxxxxxx (18+ chars) ou URL do canal.', 'err', 5000);
+    return;
+  }
+  const r = await api('/api/concorrentes/add', {method:'POST', body:{ids:[id]}});
+  if(r && r.ok){
+    input.value = '';
+    alrt(`✓ Concorrente adicionado (${r.total} total)`, 'ok', 2500);
+    carregarConcorrentes();
+  }else{
+    alrt('Erro: '+(r.erro||''), 'err');
+  }
+}
+async function removerConcorrente(id){
+  const r = await api('/api/concorrentes/remove', {method:'POST', body:{ids:[id]}});
+  if(r && r.ok) carregarConcorrentes();
+}
+async function limparConcorrentes(){
+  if(!confirm('Limpar TODA a blacklist de concorrentes?')) return;
+  const r = await api('/api/concorrentes/clear', {method:'POST'});
+  if(r && r.ok){
+    alrt('Blacklist limpa.', 'ok', 2000);
+    carregarConcorrentes();
+  }
+}
+
+// ── V58.27: EXPORT/IMPORT XLSX ───────────────────────────
+async function exportarLoteXlsx(){
+  const btn = document.getElementById('btn-export-xlsx');
+  const status = document.getElementById('xlsx-status');
+  btn.disabled = true;
+  status.textContent = 'Gerando planilha...';
+  status.style.color = 'var(--ac)';
+  try {
+    const r = await fetch('/api/lote/export_xlsx', {method:'POST'});
+    if(!r.ok){
+      const err = await r.json().catch(()=>({erro: r.statusText}));
+      throw new Error(err.erro || 'Falha no export');
+    }
+    const blob = await r.blob();
+    // pega nome do arquivo do header
+    const cd = r.headers.get('Content-Disposition') || '';
+    let fname = `thon_lote_${new Date().toISOString().slice(0,10)}.xlsx`;
+    const m = cd.match(/filename="?([^";]+)"?/);
+    if(m) fname = m[1];
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fname;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    status.textContent = `✓ Planilha exportada: ${fname} — abra no Excel, preencha a coluna 'decisao' (aprovar/reprovar/revisar), depois importe de volta.`;
+    status.style.color = 'var(--gr)';
+  } catch(e) {
+    status.textContent = '❌ Erro: ' + e.message;
+    status.style.color = 'var(--rd)';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function importarLoteXlsx(){
+  document.getElementById('input-import-xlsx').click();
+}
+
+async function handleImportXlsx(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const btn = document.getElementById('btn-import-xlsx');
+  const status = document.getElementById('xlsx-status');
+  btn.disabled = true;
+  status.textContent = `Importando ${file.name}...`;
+  status.style.color = 'var(--ac)';
+  try {
+    const fd = new FormData();
+    fd.append('file', file);
+    const r = await fetch('/api/lote/import_xlsx', {method:'POST', body: fd});
+    const body = await r.json();
+    if(!r.ok || !body.ok){
+      throw new Error(body.erro || `HTTP ${r.status}`);
+    }
+    status.textContent = `✓ Importação concluída! ✓ ${body.aprovados||0} aprovados · ✗ ${body.reprovados||0} reprovados · 👁 ${body.revisar||0} para revisar · ${body.ignorados||0} ignorados · ${body.lote_restante||0} no lote restante.`;
+    status.style.color = 'var(--gr)';
+    // Atualiza tudo
+    await carregarLoteDoBackend();
+    await carregarAprovados();
+    await carregarReprovados();
+    await atualizarContadores();  // V58.28: sincroniza todos os contadores
+    alrt(`✓ Planilha processada! ${body.aprovados||0} aprovados, ${body.reprovados||0} reprovados.`, 'ok', 5000);
+  } catch(e) {
+    status.textContent = '❌ Erro: ' + e.message;
+    status.style.color = 'var(--rd)';
+    alrt('Erro ao importar: ' + e.message, 'err', 6000);
+  } finally {
+    btn.disabled = false;
+    event.target.value = ''; // reseta input pra poder importar mesmo arquivo de novo
+  }
+}
+
+// ── INIT ─────────────────────────────────────────────────
+(async function init(){
+  // V-SaaS: Verifica se precisa de login antes de carregar o app
+  try {
+    const testRes = await fetch('/prospector/status');
+    if (testRes.status === 401) {
+      const pw = getAuthPassword();
+      if (pw) {
+        const testRes2 = await fetch('/prospector/status', {headers: {'X-THON-Auth': pw}});
+        if (testRes2.status !== 200) {
+          clearAuthPassword();
+          showLoginScreen('Digite a senha de acesso:');
+          return;
+        }
+      } else {
+        showLoginScreen('Digite a senha de acesso:');
+        return;
+      }
+    }
+  } catch(e) { console.log('[INIT] Auth check falhou, continuando...', e); }
+
+  // Carrega estado inicial do backend
+  const r = await api('/prospector/status');
+  if(r && r.ok){
+    engineMode = r.engine_mode || 'api';
+    document.querySelectorAll('.engine-card').forEach(c=>c.classList.remove('on'));
+    const ec = document.querySelector(`.engine-card[data-v="${engineMode}"]`) || document.querySelector('.engine-card[data-v="api"]');
+    if(ec) ec.classList.add('on');
+    document.getElementById('hd-engine').textContent = engineMode;
+    document.getElementById('hd-status').textContent = r.status || 'idle';
+
+    // Atualiza Auto Hunt toggle se já estiver ligado
+    if(r.auto_hunt && r.auto_hunt.enabled){
+      autoHuntOn = true;
+      document.getElementById('auto-hunt-toggle').checked = true;
+      document.getElementById('auto-hunt-status').textContent = 'LIGADO';
+      document.getElementById('auto-hunt-status').className = 'status-text on';
+      document.getElementById('hunt-badge').style.display = 'flex';
+    }
+  }
+  await carregarAprovados();
+  await carregarReprovados();
+  carregarConcorrentes();
+  // Polling inicial só para manter header atualizado
+  setInterval(async()=>{
+    if(currentStep !== 6){
+      const r = await api('/prospector/status');
+      if(r && r.ok){
+        document.getElementById('nav-ac').textContent = r.aprovados_count || 0;
+        document.getElementById('nav-rc').textContent = r.reprovados_count || 0;
+        document.getElementById('hd-keys').textContent = r.api_channels_detailed || '—';
+        document.getElementById('hd-quota').textContent = (r.api_quota_pct || 0) + '%';
+      }
+    }
+  }, 5000);
+})();
+</script>
+</body>
+</html>
