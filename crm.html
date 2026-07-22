@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>THON CRM — API Collector V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07100f;--s1:#0f1c1a;--s2:#141f1e;--s3:#192726;--bd:rgba(255,255,255,.08);--bda:rgba(255,255,255,.16);--ac:#00c6ff;--gr:#2effa0;--ye:#ffd166;--rd:#ff4f6d;--mu:#6e918b;--tx:#dff8f2;--ff:'Syne',sans-serif;--mo:'DM Mono',monospace}*{box-sizing:border-box;margin:0;padding:0}body{min-height:100vh;background:var(--bg);color:var(--tx);font-family:var(--ff);overflow:hidden}body::after{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.035) 3px,rgba(0,0,0,.035) 4px);pointer-events:none;z-index:99}.top{height:62px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 22px;background:rgba(7,16,15,.92);border-bottom:1px solid var(--bd);backdrop-filter:blur(12px)}.brand{display:flex;align-items:center;gap:12px}.mark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(0,198,255,.22),rgba(46,255,160,.10));border:1px solid rgba(0,198,255,.28);font:800 15px var(--mo);color:var(--ac)}.title{font-size:15px;font-weight:800}.sub{font:9px var(--mo);color:var(--mu);letter-spacing:.11em;margin-top:2px}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.toolbar input,.toolbar select{height:36px;background:var(--s2);border:1px solid var(--bd);border-radius:9px;color:var(--tx);padding:0 11px;font:11px var(--mo);outline:none}.toolbar input{width:240px}.btn{height:36px;padding:0 13px;border-radius:9px;background:var(--s2);border:1px solid var(--bd);color:var(--tx);font:700 12px var(--ff);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:var(--bda)}.btn.green{background:rgba(46,255,160,.10);border-color:rgba(46,255,160,.25);color:var(--gr)}.btn.blue{background:rgba(0,198,255,.10);border-color:rgba(0,198,255,.25);color:var(--ac)}.shell{height:calc(100vh - 62px);display:flex;flex-direction:column;padding:14px 18px 18px;gap:12px}.stats{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:8px}.stat{background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:11px 13px;min-width:0}.stat span{display:block;font:9px var(--mo);color:var(--mu);letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}.stat b{font:500 23px var(--mo);color:var(--tx)}.filters{display:flex;gap:7px;align-items:center;overflow:auto;padding-bottom:2px}.chip{padding:7px 11px;border-radius:8px;background:var(--s2);border:1px solid var(--bd);font:10px var(--mo);color:var(--mu);cursor:pointer;white-space:nowrap}.chip.on{color:var(--ac);border-color:rgba(0,198,255,.28);background:rgba(0,198,255,.08)}.board-wrap{flex:1;overflow-x:auto;overflow-y:hidden;padding-bottom:8px}.board{height:100%;display:flex;gap:12px;align-items:stretch;min-width:max-content}.col{width:315px;flex:0 0 315px;background:var(--s1);border:1px solid var(--bd);border-radius:16px;display:flex;flex-direction:column;min-height:0}.col-head{height:48px;padding:0 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px}.col-title{font-size:13px;font-weight:800}.count{font:10px var(--mo);color:var(--mu);border:1px solid var(--bd);border-radius:99px;padding:3px 8px}.col-tools{display:flex;align-items:center;gap:6px}.col-select{height:24px;padding:0 7px;border-radius:7px;background:rgba(0,198,255,.08);border:1px solid rgba(0,198,255,.20);color:var(--ac);font:9px var(--mo);cursor:pointer}.col-select:hover{border-color:rgba(0,198,255,.42);color:var(--tx)}.col-body{flex:1;overflow-y:auto;padding:10px;min-height:0}.col-body.drag-over{background:rgba(46,255,160,.045);outline:1px dashed rgba(46,255,160,.35);outline-offset:-8px}.lead{background:#0b1716;border:1px solid var(--bd);border-left:3px solid var(--gr);border-radius:13px;padding:11px;margin-bottom:9px;cursor:grab;transition:.15s}.lead:hover{transform:translateY(-1px);border-color:var(--bda)}.lead.dragging{opacity:.45}.lead-top{display:flex;gap:10px}.ava{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;flex:0 0 42px;background:var(--gr);color:#021107;font-weight:800;overflow:hidden}.ava img{width:100%;height:100%;object-fit:cover}.li{min-width:0;flex:1}.name{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font:10px/1.4 var(--mo);color:var(--mu);margin-top:3px}.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.badge{font:9px var(--mo);border:1px solid var(--bd);background:rgba(255,255,255,.04);color:var(--mu);border-radius:5px;padding:3px 6px}.bgr{color:var(--gr);background:rgba(46,255,160,.07);border-color:rgba(46,255,160,.2)}.bac{color:var(--ac);background:rgba(0,198,255,.07);border-color:rgba(0,198,255,.2)}.bye{color:var(--ye);background:rgba(255,209,102,.07);border-color:rgba(255,209,102,.2)}.brd{color:var(--rd);background:rgba(255,79,109,.07);border-color:rgba(255,79,109,.2)}.actions{display:flex;gap:5px;margin-top:9px}.mini{height:26px;padding:0 8px;border-radius:7px;font:10px var(--mo);background:var(--s2);border:1px solid var(--bd);color:var(--mu);cursor:pointer}.mini:hover{color:var(--tx);border-color:var(--bda)}.empty{border:1px dashed var(--bd);border-radius:12px;color:var(--mu);font:11px var(--mo);text-align:center;padding:28px 8px}.drawer-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200}.drawer-bg.on{display:block}.drawer{position:fixed;top:0;right:0;bottom:0;width:min(720px,96vw);background:var(--bg);border-left:1px solid var(--bd);z-index:201;transform:translateX(104%);transition:.25s;display:flex;flex-direction:column}.drawer.on{transform:none}.dh{padding:18px 22px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}.dh h2{font-size:18px}.close{width:34px;height:34px;border-radius:9px;background:var(--s2);border:1px solid var(--bd);color:var(--mu);cursor:pointer}.db{padding:18px 22px;overflow:auto}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-bottom:12px}.field label{display:block;font:9px var(--mo);color:var(--mu);letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:9px;color:var(--tx);padding:10px 11px;font:12px var(--mo);outline:none}.field textarea{min-height:78px;resize:vertical}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);padding:10px 16px;border-radius:99px;background:var(--s1);border:1px solid rgba(46,255,160,.25);color:var(--tx);font-weight:800;z-index:300;display:none}@media(max-width:900px){body{overflow:auto}.top{height:auto;align-items:flex-start;padding:12px;flex-direction:column}.shell{height:auto}.stats{grid-template-columns:repeat(2,1fr)}.board-wrap{height:70vh}.toolbar input{width:100%}.col{width:285px;flex-basis:285px}.grid{grid-template-columns:1fr}}
+
+.collector{background:linear-gradient(135deg,rgba(0,198,255,.08),rgba(46,255,160,.045));border:1px solid rgba(0,198,255,.18);border-radius:16px;padding:12px;display:grid;grid-template-columns:minmax(260px,1fr) 360px;gap:12px;min-height:120px}.collector h3{font-size:13px;margin-bottom:8px}.opts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.opt{font:10px var(--mo);color:var(--mu);background:rgba(0,0,0,.18);border:1px solid var(--bd);border-radius:9px;padding:7px 9px;display:flex;gap:6px;align-items:center}.opt input{accent-color:#2effa0}.collector select,.collector input[type=number]{height:34px;background:#081514;border:1px solid var(--bd);border-radius:8px;color:var(--tx);padding:0 10px;font:10px var(--mo)}.console{height:104px;background:#030807;border:1px solid rgba(46,255,160,.18);border-radius:12px;padding:10px;overflow:auto;font:10px/1.45 var(--mo);color:#9fffd0;white-space:pre-wrap}.console .err{color:#ff8fa3}.console .ok{color:#2effa0}.collector-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.collector small{display:block;color:var(--mu);font:10px/1.45 var(--mo);margin-top:7px}@media(max-width:1100px){.collector{grid-template-columns:1fr}.console{height:140px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><div class="mark">W</div><div><div class="title">THON CRM</div><div class="sub">// pipeline lateral · coleta API no CRM</div></div></div>
+  <div class="toolbar">
+    <input id="search" placeholder="Buscar lead, nicho, canal..." oninput="debouncedLoad()">
+    <select id="perPage" onchange="page=1;load()"><option value="200">200</option><option value="100">100</option><option value="50">50</option></select>
+    <button class="btn blue" onclick="syncCRM()">↻ Sincronizar aprovados</button>
+    <button class="btn" onclick="newLead()">+ Lead</button>
+    <button class="btn blue" onclick="verificarBRSelected()">🌎 Verificar BR</button>
+    <button class="btn green" id="btnExportSelected" onclick="exportSelected()">⬇ Selecionados (0)</button>
+    <button class="btn" onclick="exportVisible()">⬇ Lote inteiro</button>
+    <button class="btn" style="color:var(--rd);border-color:rgba(255,79,109,.25)" onclick="deleteSelected()">🗑 Apagar</button>
+    <button class="btn" onclick="openColumnsModal()" style="background:rgba(0,198,255,.08);border-color:rgba(0,198,255,.2);color:var(--ac)">⚙️ Colunas</button>
+    <a class="btn" href="/prospector">Prospector</a>
+  </div>
+</header>
+<main class="shell">
+  <section class="stats" id="stats"></section>
+  <section class="filters" id="filters">
+    <button class="chip on" data-filter="all" onclick="setFilter('all')">Todos</button>
+    <button class="chip" data-filter="com_transcricao" onclick="setFilter('com_transcricao')">Com transcrição</button>
+    <button class="chip" data-filter="sem_transcricao" onclick="setFilter('sem_transcricao')">Sem transcrição</button>
+    <button class="chip" data-filter="sem_instagram" onclick="setFilter('sem_instagram')">Sem Instagram</button>
+    <button class="chip" data-filter="score80" onclick="setFilter('score80')">Score 80+</button>
+    <button class="chip" data-filter="prontos_editar" onclick="setFilter('prontos_editar')">Prontos editar</button>
+    <button class="chip" data-source="youtube" onclick="setSource('youtube')">YouTube</button>
+    <button class="chip" data-source="instagram" onclick="setSource('instagram')">Instagram</button>
+    <button class="chip" data-source="all" onclick="setSource('all')">Todos sources</button>
+    <button class="chip" data-source="archived" onclick="setSource('archived')">Arquivados</button>
+  </section>
+
+  <section class="collector" id="collectorPanel">
+    <div>
+      <h3>⚡ CRM API Collector V2</h3>
+      <div class="opts">
+        <label class="opt"><input id="opt_channel" type="checkbox" checked> canal/descrição</label>
+        <label class="opt"><input id="opt_avatar" type="checkbox" checked> avatar</label>
+        <label class="opt"><input id="opt_contacts" type="checkbox" checked> email/Instagram/links</label>
+        <label class="opt"><input id="opt_videos" type="checkbox" checked> últimos vídeos/views</label>
+        <label class="opt"><input id="opt_transcript" type="checkbox"> transcrição</label>
+        <select id="collectorEngine"><option value="api">API rápida/curl</option><option value="api_dlp">API + DLP fallback</option><option value="dlp">DLP profundo</option></select>
+        <label class="opt">limite <input id="collectorLimit" type="number" value="25" min="1" max="200" style="width:70px"></label>
+        <label class="opt">vídeos <input id="collectorVideos" type="number" value="10" min="1" max="25" style="width:62px"></label>
+      </div>
+      <!-- FILTROS DE VÍDEO (dentro do collector) -->
+      <div style="margin-top:10px;border-top:1px solid var(--bd);padding-top:10px">
+        <details style="cursor:pointer;font:11px var(--mo);color:var(--mu)">
+          <summary>🎬 Filtros de vídeo (opcional)</summary>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+            <label style="display:flex;flex-direction:column;gap:4px;font:10px var(--mo);color:var(--mu)">
+              Duração mínima (min)
+              <input type="number" id="crmMinDuration" value="30" min="0" style="background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;color:var(--tx);font:11px var(--mo)">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:4px;font:10px var(--mo);color:var(--mu)">
+              Duração máxima (min)
+              <input type="number" id="crmMaxDuration" value="120" min="0" style="background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;color:var(--tx);font:11px var(--mo)">
+            </label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:4px;font:10px var(--mo);color:var(--mu);margin-top:6px">
+            Palavras-chave no título (separadas por vírgula)
+            <input id="crmKeywords" value="podcast,entrevista,conversa,bate papo" style="background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;color:var(--tx);font:11px var(--mo)">
+          </label>
+          <div style="display:flex;gap:16px;margin-top:6px">
+            <label style="font:10px var(--mo);color:var(--mu)"><input type="checkbox" id="crmRequireKeyword"> Exigir palavra-chave</label>
+            <label style="font:10px var(--mo);color:var(--mu)"><input type="checkbox" id="crmIgnoreShorts" checked> Ignorar shorts</label>
+          </div>
+        </details>
+      </div>
+      <div class="collector-actions">
+        <button class="btn green" onclick="collectorRun('selected')">Coletar selecionados</button>
+        <button class="btn blue" onclick="collectorRun('next')">Coletar próximos sem dados</button>
+        <button class="btn" onclick="collectorHealth()">Testar API</button>
+        <button class="btn" onclick="collectorConsole()">Atualizar console</button>
+      </div>
+      <small>O Prospector só garimpa/aprova. Contato, avatar, descrição e últimos vídeos agora são puxados aqui no CRM. Transcrição não vem pela API; o console avisa quando ela for pulada.</small>
+    </div>
+    <pre class="console" id="collectorConsole">console pronto. clique em “Testar API”.</pre>
+  </section>
+
+  <section class="board-wrap"><div class="board" id="board"></div></section>
+  <div id="pager" style="display:flex;justify-content:center;gap:12px;color:var(--mu);font:11px var(--mo)"></div>
+</main>
+
+<!-- Drawer para edição de lead -->
+<div class="drawer-bg" id="drawerBg" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer"><div class="dh"><h2 id="drawerTitle">Lead</h2><button class="close" onclick="closeDrawer()">✕</button></div><div class="db" id="drawerBody"></div></aside>
+
+<!-- Drawer para gerenciar colunas -->
+<div class="drawer-bg" id="columnsBg" onclick="closeColumnsModal()"></div>
+<aside class="drawer" id="columnsDrawer">
+  <div class="dh"><h2 style="font-size:16px">⚙️ Colunas do pipeline</h2><button class="close" onclick="closeColumnsModal()">✕</button></div>
+  <div class="db">
+    <p style="color:var(--mu);font:11px var(--mo);margin-bottom:12px">Arraste para reordenar ou edite os nomes.</p>
+    <div id="columnsList" style="display:flex;flex-direction:column;gap:6px;"></div>
+    <div style="display:flex;gap:10px;margin-top:14px">
+      <input id="newColumnName" placeholder="Nova coluna" style="flex:1;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;color:var(--tx);font:12px var(--mo);outline:none">
+      <button class="btn green" onclick="addColumn()">+ Adicionar</button>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <button class="btn blue" onclick="saveColumns()">💾 Salvar</button>
+      <button class="btn" onclick="resetColumns()" style="color:var(--rd);border-color:rgba(255,79,109,.25)">↺ Restaurar</button>
+    </div>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let data = {}, source = 'youtube', filter = 'all', page = 1, timer = null, current = null, selected = new Set();
+const $ = id => document.getElementById(id);
+
+const api = async (u, o) => {
+  const r = await fetch(u, o);
+  let j = {};
+  try { j = await r.json(); } catch (e) {}
+  if (!r.ok || j.ok === false) throw new Error(j.erro || j.error || 'Erro API');
+  return j;
+};
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
+
+const fmt = n => {
+  n = Number(n || 0);
+  return n >= 1e6 ? (n / 1e6).toFixed(1) + 'M' : n >= 1e3 ? (n / 1e3).toFixed(n >= 1e4 ? 0 : 1) + 'K' : String(n);
+};
+
+function toast(m) {
+  const t = $('toast');
+  t.textContent = m;
+  t.style.display = 'block';
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.style.display = 'none', 2400);
+}
+
+function initials(n) {
+  return String(n || '?').trim().split(/\s+/).slice(0, 2).map(x => x[0]).join('').toUpperCase() || '?';
+}
+
+function hasT(c) {
+  return !!(c.tem_transcricao_full || c.transcricao_full || c.transcricao_preview || ['ok', 'cache', 'full', 'parcial'].includes(String(c.transcricao_status || '').toLowerCase()));
+}
+
+function avatar(c) {
+  const u = c.avatar_url || c.channel_avatar || c.profile_image_url || '';
+  return `<div class="ava" style="background:${esc(c.cor || '#2effa0')}">${u ? `<img src="${esc(u)}" onerror="this.remove();this.parentNode.textContent='${esc(initials(c.nome))}'">` : esc(initials(c.nome))}</div>`;
+}
+
+function badges(c) {
+  return `<span class="badge bac">${esc(c.source || 'youtube')}</span><span class="badge ${hasT(c) ? 'bgr' : 'brd'}">${hasT(c) ? '📝 transcrição' : '🚫 sem transcrição'}</span><span class="badge ${(c.instagram_handle || c.host_instagram) ? 'bgr' : 'bye'}">${(c.instagram_handle || c.host_instagram) ? '📷 IG' : 'sem IG'}</span>${Number(c.score || 0) >= 80 ? '<span class="badge bgr">score 80+</span>' : ''}`;
+}
+
+function debouncedLoad() { clearTimeout(timer); timer = setTimeout(() => { page = 1; load(); }, 250); }
+
+function setSource(s) { source = s; document.querySelectorAll('[data-source]').forEach(b => b.classList.toggle('on', b.dataset.source === s)); page = 1; load(); }
+
+function setFilter(f) { filter = f; document.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('on', b.dataset.filter === f)); page = 1; load(); }
+
+async function load() {
+  const q = encodeURIComponent($('search').value || '');
+  const pp = $('perPage').value || 200;
+  const archived = source === 'archived' ? 1 : 0;
+  const src = source === 'archived' ? 'all' : source;
+  data = await api(`/api/crm?source=${src}&archived=${archived}&page=${page}&per_page=${pp}&filter=${filter}&q=${q}`);
+  render();
+}
+
+function render() {
+  const s = data.stats || {}, ps = s.por_status || {};
+  $('stats').innerHTML = `
+    <div class="stat"><span>leads</span><b>${data.total ?? data.all_count ?? 0}</b></div>
+    <div class="stat"><span>aprovado</span><b>${ps.aprovado || 0}</b></div>
+    <div class="stat"><span>com transcrição</span><b>${s.com_transcricao || 0}</b></div>
+    <div class="stat"><span>sem instagram</span><b>${s.sem_instagram || 0}</b></div>
+    <div class="stat"><span>fechados</span><b>${s.fechados || 0}</b></div>
+    <div class="stat"><span>mrr</span><b>R$ ${fmt(s.mrr || 0)}</b></div>
+  `;
+
+  const cards = data.cards || [], cols = data.columns || [], labels = data.labels || {}, colors = data.colors || {};
+  $('board').innerHTML = cols.map(col => {
+    const list = cards.filter(c => (c.status || 'aprovado') === col);
+    return `
+      <div class="col">
+        <div class="col-head" style="color:${colors[col] || '#2effa0'}">
+          <div class="col-title">${esc(labels[col] || col)}</div>
+          <div class="col-tools">
+            <button class="col-select" onclick="event.stopPropagation();toggleColumnSelection('${esc(col)}')">${selectedInColumn(col) ? 'Limpar' : 'Selecionar'}</button>
+            <div class="count">${list.length}</div>
+          </div>
+        </div>
+        <div class="col-body" data-status="${col}" ondragover="allowDrop(event)" ondragleave="this.classList.remove('drag-over')" ondrop="dropCard(event,'${col}')">
+          ${list.length ? list.map(card).join('') : '<div class="empty">Arraste um lead para cá</div>'}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  $('pager').innerHTML = `Página ${data.page || 1} de ${data.total_pages || 1} · ${cards.length} cards visíveis`;
+  updateSelectedCount();
+}
+
+function selectedInColumn(col) {
+  const list = (data.cards || []).filter(c => (c.status || 'aprovado') === col);
+  return !!list.length && list.every(c => selected.has(String(c.id)));
+}
+
+function toggleColumnSelection(col) {
+  const list = (data.cards || []).filter(c => (c.status || 'aprovado') === col);
+  if (!list.length) { toast('Coluna vazia'); return; }
+  const all = list.every(c => selected.has(String(c.id)));
+  list.forEach(c => { const id = String(c.id); if (all) selected.delete(id); else selected.add(id); });
+  toast(`${all ? 'Seleção limpa' : 'Selecionados'}: ${list.length} em ${((data.labels || {})[col] || col)}`);
+  render();
+}
+
+function card(c) {
+  const id = String(c.id);
+  return `
+    <div class="lead" style="border-left-color:${esc(c.cor || '#2effa0')}" draggable="true" ondragstart="dragCard(event,'${esc(c.id)}','${esc(c.source || 'youtube')}')" onclick="openLead('${esc(c.id)}','${esc(c.source || 'youtube')}')">
+      <div class="lead-top">
+        <input type="checkbox" ${selected.has(id) ? 'checked' : ''} onclick="event.stopPropagation()" onchange="toggleSelected('${esc(c.id)}',this.checked)">
+        ${avatar(c)}
+        <div class="li">
+          <div class="name">${esc(c.nome)}</div>
+          <div class="meta">${esc(c.nicho || 'sem nicho')} · ${esc(c.subs_fmt || '')} · score ${c.score || 0}${c.pais_label ? ' · 🌎 ' + esc(c.pais_label) : ''}</div>
+          <div class="badges">${badges(c)}</div>
+          ${c.ultimo_episodio_titulo ? `<div class="meta">🎬 ${esc(c.ultimo_episodio_titulo).slice(0, 90)}</div>` : ''}
+          <div class="actions">
+            <button class="mini" onclick="event.stopPropagation();collectorOne('${esc(c.id)}','${esc(c.source || 'youtube')}')">Coletar API</button>
+            <button class="mini" onclick="event.stopPropagation();verificarBROne('${esc(c.id)}')">Verificar BR</button>
+            <button class="mini" onclick="event.stopPropagation();moveNext('${esc(c.id)}','${esc(c.source || 'youtube')}')">Avançar</button>
+            <button class="mini" onclick="event.stopPropagation();archiveLead('${esc(c.id)}','${esc(c.source || 'youtube')}')">Arquivar</button>
+            <button class="mini" style="color:var(--rd)" onclick="event.stopPropagation();deleteOne('${esc(c.id)}')">Apagar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function dragCard(e, id, src) { e.dataTransfer.setData('lead', JSON.stringify({ id, source: src })); e.currentTarget.classList.add('dragging'); }
+
+function allowDrop(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+
+async function dropCard(e, status) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  const l = JSON.parse(e.dataTransfer.getData('lead') || '{}');
+  if (!l.id) return;
+  await updateLead({ id: l.id, source: l.source, status });
+  toast('Status atualizado');
+  load();
+}
+
+async function updateLead(p) { return api('/api/crm/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(p) }); }
+
+function find(id, src) { return (data.cards || []).find(c => String(c.id) === String(id) && (!src || String(c.source || 'youtube') === String(src))) || null; }
+
+async function moveNext(id, src) {
+  const c = find(id, src);
+  if (!c) return;
+  const cols = data.columns || [];
+  const i = cols.indexOf(c.status || 'aprovado');
+  await updateLead({ id, source: src, status: cols[Math.min(cols.length - 1, Math.max(0, i + 1))] });
+  load();
+}
+
+async function archiveLead(id, src) { await updateLead({ id, source: src, archived: true }); toast('Arquivado'); load(); }
+
+function closeDrawer() { $('drawer').classList.remove('on'); $('drawerBg').classList.remove('on'); current = null; }
+
+function openLead(id, src) {
+  current = find(id, src);
+  if (!current) return;
+  const c = current;
+  $('drawerTitle').textContent = c.nome || 'Lead';
+  $('drawer').classList.add('on');
+  $('drawerBg').classList.add('on');
+  $('drawerBody').innerHTML = `
+    <div class="grid">
+      <div class="field"><label>Nome</label><input id="f_nome" value="${esc(c.nome)}"></div>
+      <div class="field"><label>Status</label><select id="f_status">${(data.columns || []).map(st => `<option value="${st}" ${c.status === st ? 'selected' : ''}>${esc(data.labels[st] || st)}</option>`).join('')}</select></div>
+      <div class="field"><label>URL</label><input id="f_url" value="${esc(c.url || '')}"></div>
+      <div class="field"><label>Instagram</label><input id="f_ig" value="${esc(c.instagram_handle || '')}"></div>
+      <div class="field"><label>Valor mensal</label><input id="f_valor" type="number" value="${c.valor_mensal || 0}"></div>
+      <div class="field"><label>Próxima ação</label><input id="f_next" value="${esc(c.proxima_acao || '')}"></div>
+    </div>
+    <div class="field"><label>Mensagem DM</label><textarea id="f_dm">${esc(c.mensagem_dm || '')}</textarea></div>
+    <div class="field"><label>Observações</label><textarea id="f_obs">${esc(c.observacoes || '')}</textarea></div>
+    <div class="field"><label>Demo URL</label><input id="f_demo" value="${esc(c.demo_url || '')}"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn green" onclick="saveLead()">Salvar</button>
+      <button class="btn blue" onclick="verificarBROne('${esc(c.id)}')">🌎 Verificar BR</button>
+      <button class="btn" onclick="archiveCurrent()">Arquivar</button>
+      <button class="btn" style="color:var(--rd);border-color:rgba(255,79,109,.25)" onclick="deleteOne('${esc(c.id)}')">Apagar</button>
+      <a class="btn blue" target="_blank" href="${esc(c.url || '#')}">Abrir canal</a>
+    </div>
+  `;
+}
+
+async function saveLead() {
+  if (!current) return;
+  await updateLead({
+    id: current.id,
+    source: current.source,
+    nome: $('f_nome').value,
+    status: $('f_status').value,
+    url: $('f_url').value,
+    instagram_handle: $('f_ig').value,
+    valor_mensal: +$('f_valor').value || 0,
+    proxima_acao: $('f_next').value,
+    mensagem_dm: $('f_dm').value,
+    observacoes: $('f_obs').value,
+    demo_url: $('f_demo').value
+  });
+  toast('Lead salvo');
+  closeDrawer();
+  load();
+}
+
+async function archiveCurrent() { await archiveLead(current.id, current.source); closeDrawer(); }
+
+async function syncCRM() {
+  const r = await api('/api/crm/sync', { method: 'POST' });
+  const extra = r.file ? ` · ${String(r.file).split('/').pop()}` : '';
+  toast(`Sincronizado: ${r.aprovados || 0} aprovados · ${r.total || 0} cards${extra}`);
+  load();
+}
+
+function updateSelectedCount() {
+  const b = $('btnExportSelected');
+  if (b) b.textContent = `⬇ Selecionados (${selected.size})`;
+}
+
+function toggleSelected(id, on) { if (on) selected.add(String(id)); else selected.delete(String(id)); updateSelectedCount(); }
+
+async function baixarCRM(ids, nome) {
+  if (!ids.length) { alert('Nada para exportar'); return; }
+  const r = await fetch('/api/crm/export', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ids })
+  });
+  const b = await r.blob();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(b);
+  a.download = nome || 'crm_leads.zip';
+  a.click();
+}
+
+async function exportSelected() {
+  const ids = [...selected];
+  if (!ids.length) { alert('Selecione pelo menos um lead no checkbox.'); return; }
+  await baixarCRM(ids, `crm_selecionados_${ids.length}.zip`);
+}
+
+async function exportVisible() {
+  const ids = (data.cards || []).map(c => String(c.id));
+  if (!ids.length) { alert('Nenhum card visível para exportar'); return; }
+  await baixarCRM(ids, `crm_lote_visivel_${ids.length}.zip`);
+}
+
+async function verificarBR(ids) {
+  ids = ids && ids.length ? ids : (data.cards || []).map(c => String(c.id));
+  if (!ids.length) { toast('Nada para verificar'); return; }
+  const r = await api('/api/crm/verificar_br', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ids })
+  });
+  toast(`BR: ${r.br || 0} provável · ${r.incerto || 0} incerto · ${r.nao_encontrado || 0} sem sinal`);
+  await load();
+}
+
+async function verificarBRSelected() { const ids = [...selected]; await verificarBR(ids.length ? ids : (data.cards || []).map(c => String(c.id))); }
+
+async function verificarBROne(id) { await verificarBR([String(id)]); closeDrawer(); }
+
+async function deleteIds(ids) {
+  ids = (ids || []).map(String).filter(Boolean);
+  if (!ids.length) { alert('Selecione pelo menos um lead.'); return; }
+  if (!confirm(`Apagar ${ids.length} lead(s) do CRM? Eles vão para thon_data/crm_apagados.json.`)) return;
+  const r = await api('/api/crm/delete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ids })
+  });
+  ids.forEach(id => selected.delete(id));
+  toast(`Apagados do CRM: ${r.removidos || 0}`);
+  closeDrawer();
+  await load();
+}
+
+async function deleteSelected() { await deleteIds([...selected]); }
+
+async function deleteOne(id) { await deleteIds([id]); }
+
+async function newLead() {
+  const nome = prompt('Nome do lead');
+  if (!nome) return;
+  await api('/api/crm/create', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nome, source: source === 'instagram' ? 'instagram' : 'youtube' })
+  });
+  load();
+}
+
+function collectorOptions() {
+  const min = parseInt(document.getElementById('crmMinDuration').value) || 0;
+  const max = parseInt(document.getElementById('crmMaxDuration').value) || 0;
+  const keywords = document.getElementById('crmKeywords').value.split(',').map(s => s.trim()).filter(Boolean);
+  return {
+    channel: document.getElementById('opt_channel').checked,
+    avatar: document.getElementById('opt_avatar').checked,
+    contacts: document.getElementById('opt_contacts').checked,
+    videos: document.getElementById('opt_videos').checked,
+    transcript: document.getElementById('opt_transcript').checked,
+    video_filter: {
+      min_duration: min * 60,
+      max_duration: max * 60,
+      keywords_title: keywords,
+      require_keyword: document.getElementById('crmRequireKeyword').checked,
+      ignore_shorts: document.getElementById('crmIgnoreShorts').checked
+    }
+  };
+}
+
+function collectorLog(m, cls = '') {
+  const el = $('collectorConsole');
+  if (!el) return;
+  const line = `[${new Date().toLocaleTimeString()}] ${m}`;
+  el.innerHTML += `\n${cls ? `<span class="${cls}">` : ''}${esc(line)}${cls ? '</span>' : ''}`;
+  el.scrollTop = el.scrollHeight;
+}
+
+function renderConsole(rows) {
+  const el = $('collectorConsole');
+  if (!el) return;
+  if (!rows || !rows.length) { collectorLog('sem eventos ainda'); return; }
+  el.innerHTML = rows.map(r => {
+    const cls = r.level === 'error' ? 'err' : (r.level === 'ok' ? 'ok' : '');
+    return `${cls ? `<span class="${cls}">` : ''}${esc(`[${r.ts || ''}] ${String(r.level || '').toUpperCase()} ${r.msg || ''}`)}${cls ? '</span>' : ''}`;
+  }).join('\n');
+  el.scrollTop = el.scrollHeight;
+}
+
+async function collectorHealth() {
+  try {
+    collectorLog('testando /api/crm/enrich/health...');
+    const r = await api('/api/crm/enrich/health');
+    renderConsole(r.console_tail || []);
+    collectorLog(`health ok · keys=${r.keys_count || 0} · ${r.feature}`, 'ok');
+    toast('CRM Collector OK');
+  } catch (e) {
+    collectorLog('erro health: ' + e.message, 'err');
+    toast('Erro collector: ' + e.message);
+  }
+}
+
+async function collectorConsole() {
+  try {
+    const r = await api('/api/crm/enrich/console');
+    renderConsole(r.console || []);
+  } catch (e) {
+    collectorLog('erro console: ' + e.message, 'err');
+  }
+}
+
+async function collectorRun(mode) {
+  try {
+    const ids = mode === 'selected' ? [...selected] : [];
+    const payload = {
+      ids,
+      engine: $('collectorEngine').value,
+      options: collectorOptions(),
+      limit: +$('collectorLimit').value || 25,
+      max_videos: +$('collectorVideos').value || 10
+    };
+    if (mode === 'selected' && !ids.length) {
+      collectorLog('nenhum selecionado; marque cards com checkbox ou use próximos sem dados', 'err');
+      toast('Selecione cards ou use próximos');
+      return;
+    }
+    collectorLog(`iniciando coleta ${mode} · ids=${ids.length || 'auto'} · engine=${payload.engine}`);
+    const r = await api('/api/crm/enrich_batch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    renderConsole(r.console || []);
+    collectorLog(`fim · processados=${r.processed || 0} ok=${(r.last || {}).ok || 0} fail=${(r.last || {}).fail || 0}`, 'ok');
+    toast(`Coleta finalizada: ${r.processed || 0}`);
+    await load();
+  } catch (e) {
+    collectorLog('erro coleta: ' + e.message, 'err');
+    toast('Erro coleta: ' + e.message);
+  }
+}
+
+async function collectorOne(id, src) {
+  try {
+    collectorLog('coletando card ' + id);
+    const r = await api('/api/crm/enrich', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id,
+        engine: $('collectorEngine')?.value || 'api',
+        options: collectorOptions(),
+        max_videos: +($('collectorVideos')?.value || 10)
+      })
+    });
+    renderConsole(r.console || []);
+    toast('Card coletado');
+    await load();
+  } catch (e) {
+    collectorLog('erro card ' + id + ': ' + e.message, 'err');
+    toast('Erro: ' + e.message);
+  }
+}
+
+// ===== GERENCIAR COLUNAS =====
+async function openColumnsModal() {
+  try {
+    const r = await api('/api/crm/columns');
+    window._cols = r.columns || [];
+    renderColumns();
+    document.getElementById('columnsBg').classList.add('on');
+    document.getElementById('columnsDrawer').classList.add('on');
+  } catch (e) { toast('Erro: ' + e.message); }
+}
+function closeColumnsModal() {
+  document.getElementById('columnsBg').classList.remove('on');
+  document.getElementById('columnsDrawer').classList.remove('on');
+}
+function renderColumns() {
+  const list = document.getElementById('columnsList');
+  list.innerHTML = (window._cols || []).map((col, i) => `
+    <div style="display:flex;gap:8px;align-items:center;background:var(--s1);border-radius:8px;padding:4px 10px;border:1px solid var(--bd)">
+      <span style="color:var(--mu);font:10px var(--mo);width:24px">${i + 1}</span>
+      <input value="${esc(col)}" data-index="${i}" class="col-name-input" style="flex:1;background:transparent;border:none;color:var(--tx);font:13px var(--ff);outline:none;padding:6px 0">
+      <button class="mini" style="color:var(--rd);font-size:14px;padding:0 6px" onclick="removeColumn(${i})">✕</button>
+    </div>
+  `).join('');
+}
+function addColumn() {
+  const input = document.getElementById('newColumnName');
+  const name = input.value.trim();
+  if (!name) return toast('Digite um nome');
+  window._cols.push(name);
+  input.value = '';
+  renderColumns();
+}
+function removeColumn(i) {
+  if (!confirm(`Remover "${window._cols[i]}"?`)) return;
+  window._cols.splice(i, 1);
+  renderColumns();
+}
+async function saveColumns() {
+  const inputs = document.querySelectorAll('.col-name-input');
+  const newCols = Array.from(inputs).map(inp => inp.value.trim()).filter(Boolean);
+  if (newCols.length < 2) return toast('Mínimo 2 colunas');
+  await api('/api/crm/columns', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ columns: newCols })
+  });
+  toast('Colunas salvas!');
+  closeColumnsModal();
+  load();
+}
+async function resetColumns() {
+  if (!confirm('Restaurar colunas padrão?')) return;
+  const defaultCols = ["aprovado","coletar_dados","contato_encontrado","sem_contato","dm_enviada","respondeu","reuniao","proposta","fechado","cliente_ativo","perdido"];
+  await api('/api/crm/columns', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ columns: defaultCols })
+  });
+  toast('Colunas restauradas');
+  closeColumnsModal();
+  load();
+}
+window.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+load().then(() => collectorHealth()).catch(e => toast('Erro CRM: ' + e.message));
+</script>
+</body>
+</html>

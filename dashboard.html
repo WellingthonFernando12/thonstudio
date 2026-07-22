@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard v92.3</title>
+<link rel="stylesheet" href="/_base.css">
+<style>
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.barline{margin:10px 0}
+.barTop{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);font-weight:850}
+.bar{height:12px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;margin-top:6px}
+.fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--green))}
+.big{font-size:38px;letter-spacing:-.05em}
+.note{color:var(--mut);font-size:12px;margin-top:10px}
+.list{display:grid;gap:8px}
+.rowline{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.rowline:last-child{border-bottom:0}
+.status{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--mut);font-weight:900;font-size:12px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.hello{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid rgba(53,242,143,.18);border-radius:18px;background:linear-gradient(135deg,rgba(53,242,143,.08),rgba(18,168,255,.04));margin-bottom:14px}.helloAvatar{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,var(--green),var(--blue));color:#04100f;font-weight:950}.helloAvatar img{width:100%;height:100%;object-fit:cover}.hello b{display:block;font-size:16px}.hello span{font-size:12px;color:var(--mut)}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div>
+    <h1>Dashboard v92.3</h1>
+    <p class="sub">Prospector, CRM, funil, MRR e trabalhos sincronizados.</p>
+  </div>
+  <button class="primary" onclick="load()">Atualizar</button>
+</div>
+<div class="hello" id="helloProfile"><div class="helloAvatar">OT</div><div><b>Operador THON</b><span>Garimpeiro de leads</span></div></div>
+
+<div class="stats" id="stats"></div>
+
+<div class="grid2">
+  <div class="card">
+    <h2>Prospector</h2>
+    <div id="prospector" class="list" style="margin-top:14px"></div>
+  </div>
+  <div class="card">
+    <h2>Funil CRM</h2>
+    <div id="funil" style="margin-top:14px"></div>
+  </div>
+  <div class="card">
+    <h2>Dinheiro / MRR</h2>
+    <div id="money" style="margin-top:14px"></div>
+  </div>
+  <div class="card">
+    <h2>Trabalhos ativos</h2>
+    <div id="jobs" style="margin-top:14px"></div>
+  </div>
+</div>
+
+<script>
+async function j(u,o){return fetch(u,o).then(r=>r.json())}
+function money(n){return 'R$ '+Number(n||0).toLocaleString('pt-BR',{maximumFractionDigits:0})}
+function pct(a,b){return b?Math.min(100,Math.round(a/b*100)):0}
+function bar(label,val,max,color){
+  return `<div class="barline"><div class="barTop"><span>${label}</span><b>${val}</b></div><div class="bar"><div class="fill" style="width:${pct(val,max)}%;background:${color||'linear-gradient(90deg,var(--blue),var(--green))'}"></div></div></div>`
+}
+function row(label,val){return `<div class="rowline"><span>${label}</span><b>${val}</b></div>`}
+
+async function load(){
+  const d = await j('/api/dashboard');
+  const p = d.prospector || {};
+  const c = d.crm || {};
+  const s = c.stats || {por_status:{}};
+  const t = d.trabalhos || {};
+  const metas = d.metas || {};
+  const meta = Number(metas.meta_mensal || 10000);
+
+  stats.innerHTML = `
+    <div class="stat"><span>Lote atual</span><strong>${p.lote||0}</strong></div>
+    <div class="stat"><span>Aprovados</span><strong>${p.aprovados||0}</strong></div>
+    <div class="stat"><span>Banco/blacklist</span><strong>${p.banco_total||0}</strong></div>
+    <div class="stat"><span>MRR atual</span><strong>${money(s.mrr||0)}</strong></div>`;
+
+  prospector.innerHTML = `
+    <span class="status"><i class="dot"></i>${p.status || 'idle'} · ${(p.msg || 'pronto')}</span>
+    ${row('Auto Hunt', p.auto_hunt?.enabled ? `ON · ${p.auto_hunt.running_cycle ? 'executando' : 'aguardando'} · ${p.auto_hunt.cycles || 0} ciclos` : 'OFF')}
+    ${row('Leads aguardando revisão', p.lote || 0)}
+    ${row('Canais qualificados na busca atual', p.qualificados || 0)}
+    ${row('Canais verificados na busca atual', p.verificados || 0)}
+    ${row('Reprovados / descartados', p.reprovados || 0)}
+    ${row('Canais já conhecidos', p.banco_total || 0)}
+    <p class="note">Estes números vêm direto do backend do Prospector.</p>`;
+
+  const maxFun = Math.max(...Object.values(s.por_status || {}), 1);
+  funil.innerHTML = (c.columns || []).map(k => bar(c.labels[k], s.por_status[k] || 0, maxFun, c.colors[k])).join('');
+
+  money.innerHTML = `
+    <div class="big">${money(s.mrr||0)}</div>
+    ${bar('MRR atual', s.mrr || 0, meta)}
+    ${bar('Faltam para meta', Math.max(0, meta - (s.mrr||0)), meta, 'linear-gradient(90deg,#ffd166,#fb923c)')}
+    <p class="note">Meta mensal: <b>${money(meta)}</b> · Fechados: <b>${s.fechados||0}</b></p>`;
+
+  jobs.innerHTML = `
+    ${row('Trabalhos ativos', t.ativos || 0)}
+    ${row('Total trabalhos', t.total || 0)}
+    ${row('Vídeos entregues', `${t.entregues||0}/${t.videos||0}`)}
+    ${row('Horas cronometradas', `${t.horas||0}h`)}
+    ${row('Receita em trabalhos', money(t.receita||0))}
+    ${bar('Progresso geral', t.entregues || 0, Math.max(1, t.videos || 1))}`;
+}
+
+function initials(n){return String(n||'OT').trim().split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase()||'OT'}
+async function loadProfile(){
+  try{
+    const d=await j('/api/profile'); const p=d.profile||{};
+    helloProfile.innerHTML=`<div class="helloAvatar" style="background:${p.cor||'#35f28f'}">${p.foto?`<img src="${p.foto}">`:initials(p.nome)}</div><div><b>${p.nome||'Operador THON'}</b><span>${p.cargo||'Garimpeiro de leads'}</span></div>`;
+  }catch(e){}
+}
+window.addEventListener('message',e=>{if(e.data&&e.data.type==='profile-updated')loadProfile()});
+loadProfile();
+load();
+setInterval(load, 15000);
+</script>
+
+<script src="/static/thon_full_nav.js"></script>
+</body>
+</html>
